@@ -22,14 +22,15 @@
 
 ## 保有スキル
 
-- JavaScript/TypeScript React/Next.js Vue/Nuxt.js でのフロントエンド開発・設計 
-- Java / Kotlin Spring Boot でのバックエンド開発・設計
-- AWS でのインフラ運用
-- CI/CD での継続的インテグレーション・デプロイ
+- JavaScript/TypeScript React/Next.js Vue/Nuxt.jsでのフロントエンド開発・設計 
+- Java / Kotlin Spring Bootでのバックエンド開発・設計
+- API設計,テスト設計,データベース設計
+- AWSでのインフラ運用
+- CI/CDでの継続的インテグレーション・デプロイ
   - linterでのコード品質管理自動化
-- TDD テスト駆動開発
-- DDD ドメイン駆動開発 / Clean Architecture
-- アジャイル/スクラム 開発. 開発プロセス改善
+- TDD:テスト駆動開発
+- DDD:ドメイン駆動開発 / Clean Architecture
+- アジャイル/スクラム開発。開発プロセス改善
 
 ---
 

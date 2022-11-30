@@ -7,7 +7,19 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "textlint docs/README.md",
+    "lint:fix": "npm run lint -- fix"
+
   },
-  "author": "@yuki-koma2"
+  "author": "@yuki-koma2",
+  "devDependencies": {
+    "textlint": "^12.2.3"
+  },
+  "dependencies": {
+    "@textlint/textlint-plugin-markdown": "^12.2.3",
+    "textlint-rule-ja-hiragana-keishikimeishi": "^1.1.0",
+    "textlint-rule-ja-no-redundant-expression": "^4.0.1",
+    "textlint-rule-preset-ja-spacing": "^2.2.0",
+    "textlint-rule-preset-japanese": "^7.0.0"
+  }
 }
