@@ -8,14 +8,13 @@
   },
   "scripts": {
     "lint": "textlint docs/README.md",
-    "lint:fix": "npm run lint -- fix"
-
+    "lint:fix": "npm run lint -- fix",
+    "build": "md-to-pdf docs/README.md --config-file config/md-to-pdf.config.json"
   },
   "author": "@yuki-koma2",
   "devDependencies": {
-    "textlint": "^12.2.3"
-  },
-  "dependencies": {
+    "md-to-pdf": "^5.2.0",
+    "textlint": "^12.2.3",
     "@textlint/textlint-plugin-markdown": "^12.2.3",
     "textlint-rule-ja-hiragana-keishikimeishi": "^1.1.0",
     "textlint-rule-ja-no-redundant-expression": "^4.0.1",
