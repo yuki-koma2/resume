@@ -1,0 +1,13 @@
+{
+  "name": "koma2-resume",
+  "version": "1.0.0",
+  "description": "yuki koma2's resume",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "@yuki-koma2"
+}
