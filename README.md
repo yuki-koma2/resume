@@ -15,12 +15,25 @@ githubで書いて管理します。
 
 ### Setup
 
-```bash
+```shell
 $ git clone
 $ cd resume
 $ npm install
 ```
 
+### lint
+
+文章チェック
+
+```shell
+npm run lint
+```
+
+自動修正
+
+```shell
+npm run lint:fix
+```
 
 
 ## References
