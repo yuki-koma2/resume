@@ -1,25 +1,9 @@
 title: komatsu's 職務経歴書
-author:
-  name: yuki komatsu
 description: 現時点での職務経歴書。逐次更新します。
-show_excerpts: false # set to true to show excerpts on the homepage
-
-# Minima date format
-# refer to https://shopify.github.io/liquid/filters/date/ if you want to customize this
-minima:
-  # generate social links in footer
-  social_links:
-    - { platform: github,         user_url: "https://github.com/yuki-koma2" }
-    - { platform: twitter,        user_url: "https://twitter.com/yukikoma4" }
-
-# If you want to link only specific pages in your header, uncomment
-# this and add the path to the pages in order as they should show up
-#header_pages:
-# - about.md
+show_excerpts: false 
 
 # Build settings
-theme: minima
-
+remote_theme: pages-themes/merlot@v0.2.0
 plugins:
- - jekyll-feed
- - jekyll-seo-tag
+- jekyll-remote-theme 
+
