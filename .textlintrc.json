@@ -3,7 +3,10 @@
     "preset-japanese": true,
     "ja-no-redundant-expression": true,
     "preset-ja-spacing": true,
-    "ja-hiragana-keishikimeishi": true
+    "ja-hiragana-keishikimeishi": true,
+    "prh": {
+      "rulePaths" :["./dictionary/prh.yml"]
+    }
   },
   "plugins": {
     "@textlint/markdown": true
