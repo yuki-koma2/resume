@@ -1,4 +1,4 @@
-name: version tag action
+name: build and deploy
 on:
   push:
     branches:
@@ -16,19 +16,44 @@ on:
             - 'major'
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
+    build:
+      name: build pdf and upload release
+      runs-on: ubuntu-latest
+      steps:
       - uses: actions/checkout@v3
-      - name: Bump version and push tag
-        id: tag_version
-        uses: mathieudutour/github-tag-action@v6.1
+      - uses: actions/setup-node@v2-beta
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          default_bump: ${{ github.event.inputs.releaseSize }}
-      - name: Create a GitHub release
-        uses: ncipollo/release-action@v1
-        with:
-          tag: ${{ steps.tag_version.outputs.new_tag }}
-          name: Release ${{ steps.tag_version.outputs.new_tag }}
-          body: ${{ steps.tag_version.outputs.changelog }}
+          node-version: 19
+      - run: npm install
+      - name: build pdf
+        run: npm run build
+    release:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v3
+        - name: Bump version and push tag
+          id: tag_version
+          uses: mathieudutour/github-tag-action@v6.1
+          with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            default_bump: ${{ github.event.inputs.releaseSize }}
+        - name: Create a GitHub release
+          uses: actions/create-release@v1
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+            tag: ${{ steps.tag_version.outputs.new_tag }}
+            release_name: Release ${{ steps.tag_version.outputs.new_tag }}
+            body: ${{ steps.tag_version.outputs.changelog }}
+            draft: false
+            prerelease: false
+        - name: upload Release Asset
+          id: upload-release-asset
+          uses: actions/upload-release-asset@v1
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+            upload_url: ${{ steps.create_release.outputs.upload_url }}
+            asset_path: ./dist/resume.pdf
+            asset_name: resume.pdf
+            asset_content_type: application/pdf
