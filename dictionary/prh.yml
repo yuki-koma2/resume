@@ -1,7 +1,7 @@
 version: 1
 imports:
-  #  ユビキタス言語
   - ./prh_ubiquitous.yml
+  - ./typo.yml
 
 # 記載方法は以下参照
 # https://github.com/vvakame/prh/tree/master/misc

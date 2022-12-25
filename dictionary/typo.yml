@@ -1,0 +1,5 @@
+meta:
+  - title: タイポしやすいものをチェック
+rules:
+  - pattern: 仕様技術
+    expected: 使用技術
