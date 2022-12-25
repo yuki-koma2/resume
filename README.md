@@ -6,7 +6,7 @@ githubで書いて管理します。
 
 ## SEE This
 - [Markdown](docs/README.md)
-- (TBD)[Github Pages](https://yuki-komatsu.github.io/resume/)
+- (TBD)[Github Pages](https://yuki-koma2.github.io/resume/)
 - TBD web site
 - TBD PDF
 
