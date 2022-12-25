@@ -4,6 +4,17 @@ on:
     branches:
       - master
   workflow_dispatch:
+    inputs:
+      releaseSize:
+        description: 'release size'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+            - 'patch'
+            - 'minor'
+            - 'major'
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,6 +25,7 @@ jobs:
         uses: mathieudutour/github-tag-action@v6.1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          default_bump: ${{ github.event.inputs.releaseSize }}
       - name: Create a GitHub release
         uses: ncipollo/release-action@v1
         with:
