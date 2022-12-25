@@ -4,8 +4,8 @@ on:
   push:
     tags:
       - v*
+  workflow_dispatch:
 
-# 一旦そのまま使わせていただいているが、タグ撃ちとか自動的にできるようにしたい。
 jobs:
   build:
     name: build pdf and upload release
