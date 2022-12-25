@@ -57,6 +57,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist
+          asset_path: ./docs/README.pdf
           asset_name: resume.pdf
+#          asset_path: ./dist/resume.pdf
+#          asset_name: resume.pdf
           asset_content_type: application/pdf
