@@ -8,7 +8,7 @@ githubで書いて管理します。
 - [Markdown](docs/README.md)
 - [Github Pages](https://yuki-koma2.github.io/resume/)
 - TBD web site
-- TBD PDF
+- [PDFはこちらからダウンロード](https://github.com/yuki-koma2/resume/releases)
 
 ## Development
 
