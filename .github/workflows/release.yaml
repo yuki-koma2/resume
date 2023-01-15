@@ -1,4 +1,4 @@
-name: build and deploy
+name: release and build pdf
 on:
   push:
     branches:
