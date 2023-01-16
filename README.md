@@ -34,7 +34,9 @@ npm run lint
 npm run lint:fix
 ```
 
-### Release リリースの単位
+### Release 
+
+#### リリースの単位
 
 単位 | 概要 | 想定頻度
 :--: | :--: | :--: 
@@ -42,6 +44,9 @@ major | 転職、プロジェクトの追加、異動 | 年単位
 minor | 実績の追記や定期的な見直し | 四半期
 patch | 誤字脱字 | 発見次第逐次
 
+#### リリース方法
+
+github actionから手動実行でタグ付け＆リリースを行う。
 
 
 ## References
