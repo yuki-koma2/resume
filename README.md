@@ -1,10 +1,9 @@
 # yuki komatsu Resume
 
-転職サイトだと、自分の思うように書けないので、自由に書き定期的に更新するように
-githubで書いて管理します。
-自分のキャリアの棚卸しにも使用する想定。
+転職サイトだと自分の思うように書けないので、自由に書き定期的に更新するようにgithubで書いて管理します。
+自分のキャリアの棚卸しにも使用する想定です。
 
-## SEE This
+## See This 職務経歴書はこちらのリンクから
 - [Markdown](docs/README.md)
 - [Github Pages](https://yuki-koma2.github.io/resume/)
 - TBD web site
@@ -34,6 +33,15 @@ npm run lint
 ```shell
 npm run lint:fix
 ```
+
+### Release リリースの単位
+
+単位 | 概要 | 想定頻度
+:--: | :--: | :--: 
+major | 転職、プロジェクトの追加、異動 | 年単位
+minor | 実績の追記や定期的な見直し | 四半期
+patch | 誤字脱字 | 発見次第逐次
+
 
 
 ## References
