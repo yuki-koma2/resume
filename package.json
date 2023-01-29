@@ -23,7 +23,7 @@
     "babel-jest": "^29.2.2",
     "jest": "^29.3.1",
     "js-yaml": "^4.1.0",
-    "md-to-pdf": "^5.2.0",
+    "md-to-pdf": "^5.2.1",
     "prh": "^5.4.4",
     "textlint": "^12.5.1",
     "textlint-rule-ja-hiragana-keishikimeishi": "^1.1.0",
