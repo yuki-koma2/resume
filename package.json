@@ -17,7 +17,7 @@
     "@babel/core": "^7.20.12",
     "@babel/preset-env": "^7.19.4",
     "@babel/preset-typescript": "^7.18.6",
-    "@jest/globals": "^29.3.1",
+    "@jest/globals": "^29.4.3",
     "@textlint/textlint-plugin-markdown": "^13.0.5",
     "@types/jest": "^29.2.5",
     "babel-jest": "^29.2.2",
