@@ -28,7 +28,7 @@
     "textlint": "^13.0.5",
     "textlint-rule-ja-hiragana-keishikimeishi": "^1.1.0",
     "textlint-rule-ja-no-redundant-expression": "^4.0.1",
-    "textlint-rule-preset-ja-spacing": "^2.2.0",
+    "textlint-rule-preset-ja-spacing": "^2.3.0",
     "textlint-rule-preset-japanese": "^7.0.0",
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
