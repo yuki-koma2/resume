@@ -1,4 +1,4 @@
-name: release
+name: version up npm
 on:
   workflow_dispatch:
     inputs:
@@ -28,18 +28,8 @@ jobs:
         run: | 
           npm version ${{ github.event.inputs.releaseSize }}
           git add package.json
-          git commit -m "version up"
-          git push --follow-tags
+          git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Create a GitHub release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.tag_version.outputs.new_tag }}
-          release_name: Release ${{ steps.tag_version.outputs.new_tag }}
-          body: ${{ steps.tag_version.outputs.changelog }}
-          draft: true
-          prerelease: false
+      - name: cat package
+        run: cat ./package.json
