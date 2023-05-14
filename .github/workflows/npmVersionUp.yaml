@@ -1,4 +1,4 @@
-name: release
+name: version up npm
 on:
   workflow_dispatch:
     inputs:
