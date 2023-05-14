@@ -26,7 +26,7 @@ jobs:
           git config --global user.name "GitHub Action"
       - name: version up and push tag
         run: | 
-          npm version ${{ github.event.inputs.releaseSize }}
+          npm version ${{ github.event.inputs.releaseSize }} --no-git-tag-version
           git add package.json
           git push
         env:
