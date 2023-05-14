@@ -35,7 +35,7 @@ jobs:
           default_bump: ${{ github.event.inputs.releaseSize }}
       - name: version up and push tag
         run: |
-          npm version ${{{ github.event.inputs.releaseSize }}}
+          npm version ${{ github.event.inputs.releaseSize }}
           git push --follow-tags
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    
