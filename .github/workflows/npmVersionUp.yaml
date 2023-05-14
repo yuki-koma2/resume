@@ -18,8 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: cat package
-        run: cat ./package.json
+      - name: cat version
+        run: npm version
       - name: Git config
         run: |
           git config --global user.email "action@github.com"
@@ -27,9 +27,8 @@ jobs:
       - name: version up and push tag
         run: | 
           npm version ${{ github.event.inputs.releaseSize }}
-          git add package.json
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: cat package
-        run: cat ./package.json
+      - name: cat version
+        run: npm version
