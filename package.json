@@ -15,7 +15,7 @@
   "author": "@yuki-koma2",
   "devDependencies": {
     "@babel/core": "^7.21.8",
-    "@babel/preset-env": "^7.19.4",
+    "@babel/preset-env": "^7.21.5",
     "@babel/preset-typescript": "^7.21.5",
     "@jest/globals": "^29.5.0",
     "@textlint/textlint-plugin-markdown": "^13.3.2",
