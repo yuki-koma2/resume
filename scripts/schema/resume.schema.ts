@@ -111,6 +111,13 @@ const StrengthOrWeakness = z.object({
   variants: variantsField,
 });
 
+// 短縮版（README_summary.md）の冒頭リード。
+// tagline は 1 行のキャッチ、elevator_pitch は 2〜4 行の自己紹介。
+const SummaryLead = z.object({
+  tagline: z.string(),
+  elevator_pitch: z.string(),
+});
+
 export const ResumeSchema = z.object({
   schema_version: z.string(),
   last_synced_with_lapras: z.string().optional(),
@@ -122,6 +129,7 @@ export const ResumeSchema = z.object({
   experiences: z.array(Experience),
   strengths: z.array(StrengthOrWeakness),
   weaknesses: z.array(StrengthOrWeakness),
+  summary_lead: SummaryLead.optional(),
 });
 
 export type Resume = z.infer<typeof ResumeSchema>;

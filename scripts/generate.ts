@@ -19,11 +19,13 @@ import {
     CareerIntentSchema,
 } from './schema/resume.schema';
 import { renderLong } from './render/long';
+import { renderSummary } from './render/summary';
 
 const REPO_ROOT = path.resolve(__dirname, '..');
 const RESUME_YML = path.join(REPO_ROOT, 'data', 'resume.yml');
 const CAREER_YML = path.join(REPO_ROOT, 'data', 'career_intent.yml');
 const OUT_LONG = path.join(REPO_ROOT, 'docs', 'README_generated.md');
+const OUT_SUMMARY = path.join(REPO_ROOT, 'docs', 'README_summary.md');
 
 const log = (msg: string): void => {
     // eslint-disable-next-line no-console
@@ -53,7 +55,14 @@ const main = (): void => {
     fs.writeFileSync(OUT_LONG, longMd, 'utf8');
     log(`✔ wrote ${path.relative(REPO_ROOT, OUT_LONG)} (${longMd.length} chars)`);
 
+    const summaryMd = renderSummary(resume, intent);
+    fs.writeFileSync(OUT_SUMMARY, summaryMd, 'utf8');
+    log(
+        `✔ wrote ${path.relative(REPO_ROOT, OUT_SUMMARY)} (${summaryMd.length} chars)`
+    );
+
     autofix(OUT_LONG);
+    autofix(OUT_SUMMARY);
 };
 
 main();
