@@ -39,7 +39,11 @@ npm test                 # jest (collectCoverage is on by default)
 npm run build            # md-to-pdf docs/README.md -> dist/resume.pdf
 ```
 
-Run a single test: `npx jest <path-or-name-pattern>` (e.g. `npx jest dictionary`).
+Run a single test: `npm test -- <path-or-name-pattern>` (e.g. `npm test -- dictionary`).
+
+### Command invocation policy
+
+Always run tests / lint / build through the `npm run` scripts defined in `package.json`, **not** by invoking `npx jest` / `npx textlint` directly. The npm scripts are the canonical entry points (CI uses them) — direct invocation can drift on flags, working directory, or module resolution. To pass arguments to a script, use the `npm test -- <args>` form.
 
 ## Linting architecture
 
