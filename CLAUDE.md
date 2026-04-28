@@ -77,6 +77,26 @@ A separate `reminder.yaml` workflow opens a quarterly "update your resume" issue
 
 `__test__/sample.test.ts` is a placeholder. Real assertions live (or will live) in `dictionary/__tests__/`. Jest is configured via `jest.config.js` with `collectCoverage: true` and v8 coverage — expect a `coverage/` directory after running tests locally.
 
+## Test-Driven Development (TDD)
+
+We adopt the t-wada style of Test-Driven Development (TDD). This approach emphasizes writing tests before writing any production code, guiding the design and ensuring code quality.
+
+### Principles of t-wada TDD
+
+1.  **Red (Write a failing test):** Write a small, focused test that describes a single piece of desired functionality. This test should fail because the functionality doesn't exist yet.
+2.  **Green (Make the test pass):** Write the minimum amount of production code necessary to make the failing test pass. Do not write any more code than what is required to satisfy the test.
+3.  **Refactor (Improve the code):** Once the test passes, refactor the code to improve its design, readability, and maintainability, without changing its external behavior. Ensure all tests still pass after refactoring.
+
+This cycle (Red-Green-Refactor) is repeated for each small piece of functionality.
+
+### Development Guidelines with TDD
+
+-   **Always start with a test:** No production code should be written without a failing test first.
+-   **Small steps:** Write tests and code in very small increments.
+-   **Focus on one thing:** Each test should focus on a single responsibility or behavior.
+-   **Refactor constantly:** Improve the code's internal structure as you go, keeping tests green.
+-   **Tests as documentation:** Well-written tests serve as living documentation of the code's behavior.
+
 ## gstack
 
 Use the `/browse` skill from gstack for all web browsing. Never use `mcp__claude-in-chrome__*` tools.
