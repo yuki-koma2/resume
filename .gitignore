@@ -2,3 +2,5 @@
 /node_modules/
 /dist/resume.pdf
 /coverage
+# 作業過程の記録（顧客名・内部 KPI・社内コードネーム等の機密情報を含むため public repo にコミットしない）
+/task_memory/

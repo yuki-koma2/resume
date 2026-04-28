@@ -9,6 +9,7 @@
  * 使い方: npm run generate
  */
 
+import { spawnSync } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as yaml from 'js-yaml';
@@ -24,6 +25,22 @@ const RESUME_YML = path.join(REPO_ROOT, 'data', 'resume.yml');
 const CAREER_YML = path.join(REPO_ROOT, 'data', 'career_intent.yml');
 const OUT_LONG = path.join(REPO_ROOT, 'docs', 'README_generated.md');
 
+const log = (msg: string): void => {
+    // eslint-disable-next-line no-console
+    console.log(msg);
+};
+
+const autofix = (file: string): void => {
+    // textlint の自動修正（ja-spacing 系の半全角スペース等）を生成物に適用する。
+    // 修正不能な指摘（sentence-length / no-doubled-joshi など）は残るが、終了コードは
+    // 無視して書き込みを失敗扱いしない。残った指摘は npm run lint:generated で確認できる。
+    const r = spawnSync('npx', ['textlint', '--fix', '--no-color', file], {
+        cwd: REPO_ROOT,
+        encoding: 'utf8',
+    });
+    if (r.stdout?.trim()) log(r.stdout.trim());
+};
+
 const main = (): void => {
     const resume = ResumeSchema.parse(
         yaml.load(fs.readFileSync(RESUME_YML, 'utf8'))
@@ -34,9 +51,9 @@ const main = (): void => {
 
     const longMd = renderLong(resume, intent);
     fs.writeFileSync(OUT_LONG, longMd, 'utf8');
+    log(`✔ wrote ${path.relative(REPO_ROOT, OUT_LONG)} (${longMd.length} chars)`);
 
-    // eslint-disable-next-line no-console
-    console.log(`✔ wrote ${path.relative(REPO_ROOT, OUT_LONG)} (${longMd.length} chars)`);
+    autofix(OUT_LONG);
 };
 
 main();
