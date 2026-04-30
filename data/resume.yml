@@ -254,7 +254,11 @@ experiences:
           - { body: "【介護領域新規 SaaS】Firebase / Firestore × DDD の同居をリポジトリ層 4 層分離 + 独立パッケージ化で割り切り、ドメイン層を Firestore 都合で歪まない構造に。詳細層は interface / mapper / firebaseSchema / impl の 4 つ。Firestore のクエリ制約（OR 不可 / IN 10 件制限 / カーソル仕様）を Specification パターンで吸収し、双方向ページング対応のクエリビルダを 1 クラスに集約", tags: [architecture, firestore, ddd] }
           - { body: "【介護領域新規 SaaS】Firebase Authentication（ID/Pass）+ SMS OTP（Amazon Pinpoint）+ IP CIDR 許可リストの 3 層直交セキュリティ設計。Firebase の MFA を採用しなかった理由（マルチリージョン / メール認証への切替容易性）まで ADR として明文化。共有アカウント運用という業務制約も解に織り込み", tags: [security, auth, adr] }
           - { body: "【介護領域新規 SaaS】チーム育成も含めて主導。テスト・OOP・DDD 未経験のジュニアメンバー複数名を OJT で育成し、Specification パターンや DI を伴う型安全モックテストを自力で書ける水準まで引き上げ。「設計を新規メンバーの教科書として書く」方針で、コード・ディレクトリ・命名そのものが OOP/DDD 入門の足場となる構造に。ADR 運用（テンプレート / 規約整備）を社内文化として定着", tags: [mentoring, culture, adr] }
-        tech: [TypeScript, Vue, "Nuxt 3", Vuetify, Firebase, Firestore, "Cloud Functions", GCP, tsup, "GitHub Packages", Turborepo, "Amazon Pinpoint"]
+          - { body: "【介護領域新規 SaaS】マルチフロント構成の技術選定を意図的に分離（病院向け Vuetify / 施設向け Tailwind + Clean Architecture / DDD 寄り）。早すぎる抽象化を避けて共通化をドメイン層に限定する技術判断と、ジュニアエンジニア育成の学習ステップ設計（中間レベル → 本来到達レベルへ段階的に上げる）の両側面を兼ねた選定。Firestore セキュリティルールに role ベースと所属ベースの二層権限モデルを実装。「やらない」判断も ADR に残し、後続の議論コストを削減", tags: [architecture, security, mentoring, adr] }
+          - { body: "【介護領域 SaaS 管理画面】介護領域 SaaS の運用管理画面（Back Office）を 0→1 で単独設計・初期実装。Next.js 13 + NestJS 10 + Firebase + PostgreSQL（Prisma）の 3 層構成（フロント / API サーバ / Cloud Functions）を構築。フロントエンドに Clean Architecture / DDD を本格適用。`I*Repository` 抽象 + Mapper パターン + Context-based DI で、将来のサーバー API 化を見越した永続層分離を先制的に整備", tags: [architecture, fullstack, ddd] }
+          - { body: "【介護領域 SaaS 管理画面】Firestore Security Rules（数百行規模）を「バックエンドの代替」として徹底活用。`checkFK`（NoSQL の外部キー制約相当）、スキーマ + 不変フィールド検証、ドメイン値検証をすべてルールに集約し、フロントを信用しないゼロトラスト設計を実現。`DatabaseTimestamp` 値オブジェクトラッパーで Firestore Timestamp 取り扱いを安全化し、`undefined` 系の頻出ランタイムエラーを根本撲滅", tags: [security, firestore, ddd] }
+          - { body: "【介護領域 SaaS 管理画面】「ジュニアでも追える Clean Architecture」を設計テーマに採用。InversifyJS のような重量 IoC を避け Context + new で軽量 DI。UseCase 層を切らず Service + Repository の 2 層に圧縮、Mapper / Repository の境界だけは強く守る最小構成。TODO / NOTE コメントを「次に学ぶべき概念」のロードマップとしてリポジトリに埋め込み、テスト・OOP・DDD 未経験のジュニア 1 名を次期テックリードまで育成。運用移管後も破綻なくメンテナンスが継続", tags: [mentoring, architecture, learning] }
+        tech: [TypeScript, Vue, "Nuxt 3", Vuetify, "Next.js", React, NestJS, Prisma, PostgreSQL, Firebase, Firestore, "Cloud Functions", "Cloud Run", GCP, tsup, "GitHub Packages", Turborepo, "Amazon Pinpoint"]
         variants: [long]
     variants: [long, short]
 
@@ -478,6 +482,14 @@ strengths:
     body: チームが未熟なところから立ち上がる過程で発生する課題の解決経験が多く、チーム課題の構造化と再定義は得意分野。
     source: lapras_job_summary
     variants: [long]
+  - id: s-design-judgement
+    label: 設計判断を言語化・ADR 化する力
+    body: 技術選定の理由・却下した選択肢・将来見直し条件を ADR として残し、組織が同じ議論を繰り返さない仕組みを作れる。
+    variants: [long, short]
+  - id: s-mentoring-tech-fusion
+    label: 技術判断と育成判断を統合する設計力
+    body: 技術選定そのものを学習機会として設計し、ジュニア育成と将来到達したい技術水準を同じ意思決定で両立させる。
+    variants: [long, short]
 
 weaknesses:
   - id: w-not-specialist
@@ -496,4 +508,62 @@ weaknesses:
       エンジニアとビジネスサイドの関係をさらに潤滑にする高い視座での動きは、
       小〜中規模（問い合わせ改善・業務効率改善）では実績があるが、大規模実績はまだ。
     source: lapras_job_summary
+    variants: [long]
+
+# ───────────────────────────────────────────
+# 設計思想 / Design Philosophy
+# PJ 横断で適用される設計原則。achievement の上位レイヤとして "なぜそう判断したか" を残す。
+# ───────────────────────────────────────────
+
+design_philosophy:
+  - id: dp-yarananai
+    label: 「やらない」判断を ADR に残す
+    body: |
+      共通 UI コンポーネント化、Next.js 移行、OpenAPI 化、UseCase 層の追加など、
+      誘惑の多い改善案を「現時点では採用しない」として理由付きで保留にする。
+      技術選定は採用するものの理由よりも、却下するものの理由を残す方が組織を育てる。
+      後続の議論コストを下げ、判断の経緯を組織知として継承する。
+    seen_in: [3sunny-techlead, 3sunny-chief]
+    variants: [long]
+
+  - id: dp-mentoring-tech-integration
+    label: 育成と技術選定を統合する
+    body: |
+      教育に十分なコストを掛けられない現場では、技術選定そのものを学習機会として設計する。
+      本来到達したいレベル（DDD / Clean Architecture）を最初から押し付けず、
+      中間レベルから段階的に上げる学習ステップを技術選定に組み込み、ジュニアでも追える設計に。
+      技術判断と育成判断を分離せず、同じ意思決定で両立させる。
+    seen_in: [3sunny-techlead]
+    variants: [long]
+
+  - id: dp-code-as-textbook
+    label: コードを教科書として書く（人にも AI にも）
+    body: |
+      Entity / IdValueObject / AbstractValueObject の 3 つの基底をそろえて
+      クラス・抽象・継承の概念を実例で見せる。
+      命名・ディレクトリ・テスト構造そのものが学習教材として機能する状態に作る。
+      副次的に、AI（Claude Code / Cursor / Codex 等）にとってもハーネスエンジニアリングが効きやすい
+      コードベースになり、人間と AI の双方にとって読みやすいリポジトリが実現する。
+    seen_in: [3sunny-techlead, 3sunny-chief]
+    variants: [long]
+
+  - id: dp-zero-trust
+    label: ゼロトラスト設計（ルールが設計書として読める粒度まで）
+    body: |
+      フロント直アクセス（Firestore SDK 直接利用、RDB の RLS 等）を許可する代わりに、
+      ルール側でドメインバリデーション・外部キー制約相当・スキーマ検証を完結させる。
+      バックエンドを薄く保ちつつ、フロントを信用しない設計。
+      RLS 系のアーキテクチャでは特に重要で、ルールが設計書として読める粒度まで作り込む必要がある。
+    seen_in: [3sunny-techlead]
+    variants: [long]
+
+  - id: dp-no-premature-abstraction
+    label: 早すぎる抽象化を避ける
+    body: |
+      現時点で必要のない共通化は明示的に保留する。
+      共有 UI コンポーネント、汎用 ORM、独自フレームワーク等は
+      「2 つ目以降の事例が出てから抽象化する」を原則に、
+      代わりに共有するのはドメイン層（用語と契約）だけに限定する。
+      過剰な抽象化が将来の変更コストを増やすことを避ける。
+    seen_in: [3sunny-techlead]
     variants: [long]

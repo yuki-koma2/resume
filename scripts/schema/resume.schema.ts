@@ -118,6 +118,16 @@ const SummaryLead = z.object({
   elevator_pitch: z.string(),
 });
 
+// 設計思想 / Design Philosophy のエントリ。
+// PJ 横断で適用される設計原則を、裏付けとなる experience id とともに残す。
+const DesignPrinciple = z.object({
+  id: z.string(),
+  label: z.string(),
+  body: z.string(),
+  seen_in: z.array(z.string()).optional(),
+  variants: variantsField,
+});
+
 export const ResumeSchema = z.object({
   schema_version: z.string(),
   last_synced_with_lapras: z.string().optional(),
@@ -129,6 +139,7 @@ export const ResumeSchema = z.object({
   experiences: z.array(Experience),
   strengths: z.array(StrengthOrWeakness),
   weaknesses: z.array(StrengthOrWeakness),
+  design_philosophy: z.array(DesignPrinciple).optional(),
   summary_lead: SummaryLead.optional(),
 });
 

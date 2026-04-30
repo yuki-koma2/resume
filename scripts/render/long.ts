@@ -348,6 +348,21 @@ const renderStrengthsWeaknesses = (resume: Resume): string => {
     return blocks.join('\n');
 };
 
+const renderDesignPhilosophy = (
+    principles: NonNullable<Resume['design_philosophy']>
+): string => {
+    const items = principles.filter(inLong);
+    if (items.length === 0) return '';
+    const blocks: string[] = ['## 設計思想 / Design Philosophy', ''];
+    for (const p of items) {
+        blocks.push(`### ${p.label}`);
+        blocks.push('');
+        blocks.push(p.body.trim());
+        blocks.push('');
+    }
+    return blocks.join('\n').trimEnd();
+};
+
 const renderCareerIntent = (intent: CareerIntent): string => {
     const blocks: string[] = [];
     blocks.push('## 意欲・興味');
@@ -385,6 +400,10 @@ export const renderLong = (
         renderOtherActivities(resume),
         HR,
         renderStrengthsWeaknesses(resume),
+        HR,
+        resume.design_philosophy
+            ? renderDesignPhilosophy(resume.design_philosophy)
+            : '',
         HR,
         renderCareerIntent(intent),
     ];
