@@ -21,6 +21,7 @@ import {
 } from '../schema/resume.schema';
 import { formatPeriod, Period } from '../helpers/period';
 import { skillIconsBadge } from '../helpers/badge';
+import { renderTimeline, type TimelineEntry } from '../helpers/timeline';
 
 type Variant = 'long' | 'short' | 'en';
 type WithVariants = { variants: Variant[] };
@@ -32,9 +33,58 @@ const inLong = <T extends WithVariants>(item: T): boolean =>
 
 const HR = '---';
 
+// 設計書 §5.2 / 判断 1-A: タイムラインに含める experience は主要 3 つだけ。
+// （副業・インターン・ボランティアはバーに出さず本文で扱う）
+const KEY_EXPERIENCE_IDS = ['bizreach', '3sunny', 'own-company'] as const;
+
+// タイムラインのバー内で使うラベル。company に「[」等の特殊文字や長い社名がある場合に短縮する。
+// own-company は YAML 上 `株式会社[未定]` プレースホルダだが、バーの `[` と紛らわしいため固定ラベル化。
+const TIMELINE_LABEL_OVERRIDE: Record<string, string> = {
+    'own-company': '自社（起業）',
+};
+
 // ───────────────────────────────────────────
 // セクションごとのレンダラ
 // ───────────────────────────────────────────
+
+const renderTimelineSection = (resume: Resume): string => {
+    const byId = new Map(resume.experiences.map((e) => [e.id, e]));
+    const entries: TimelineEntry[] = [];
+    for (const id of KEY_EXPERIENCE_IDS) {
+        const exp = byId.get(id);
+        if (!exp) continue;
+        const label = TIMELINE_LABEL_OVERRIDE[id] ?? exp.company;
+        entries.push({ label, period: exp.period });
+    }
+    if (entries.length === 0) return '';
+
+    const years = entries.flatMap((e) => {
+        const ys = [Number(e.period.start.slice(0, 4))];
+        if (e.period.end) ys.push(Number(e.period.end.slice(0, 4)));
+        return ys;
+    });
+    const yearStart = Math.min(...years);
+    // end:null の experience があるなら、最終年は yearStart の起点から見て今を含む年。
+    // 純粋関数を保つため、YAML 内の最も新しい開始年 + 1 をフォールバックとする。
+    const hasOngoing = entries.some((e) => e.period.end === null);
+    const yearEnd = hasOngoing
+        ? Math.max(...entries.map((e) => Number(e.period.start.slice(0, 4)))) + 1
+        : Math.max(...years);
+
+    const note = hasOngoing
+        ? '\n※ 3Sunny は 2026/05 以降、自社（起業）と業務委託で並行（予定）'
+        : '';
+
+    const body = [
+        '```',
+        renderTimeline(entries, { yearStart, yearEnd, charsPerYear: 8 }),
+        '```',
+    ].join('\n');
+
+    return ['## キャリアタイムライン', body, note.trim()]
+        .filter((s) => s.length > 0)
+        .join('\n\n');
+};
 
 const renderBasicInfo = (b: Resume['basic']): string =>
     [
@@ -322,6 +372,8 @@ export const renderLong = (
         '# 職務経歴書',
         renderBasicInfo(resume.basic),
         renderAccounts(resume.accounts),
+        HR,
+        renderTimelineSection(resume),
         HR,
         renderSkillsSummary(resume.skills_summary),
         HR,
