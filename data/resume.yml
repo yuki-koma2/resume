@@ -44,6 +44,7 @@ accounts:
   - { type: note,    url: "https://note.com/koma_lion",          label: Note }
   - { type: zenn,    url: "https://zenn.dev/yukikoma",           label: Zenn }
   - { type: lapras,  url: "https://lapras.com/public/KGEHCDC",   label: LAPRAS }
+  - { type: spotify, url: "https://open.spotify.com/show/0gxY016rSYioNI1HRsPOpS", label: "ポッドキャスト「カイラジ」" }
 
 skills_summary:
   - JavaScript/TypeScript React/Next.js Vue/Nuxt.jsでのフロントエンド開発・設計
@@ -81,11 +82,25 @@ experiences:
   - id: own-company
     type: own_company
     company: "株式会社[未定]"
-    period: { start: "2026-05", end: null }
+    period: { start: "2025-04", end: null }
     parallel_with: [3sunny]
     summary_public: |
-      2025年春から起業準備を進め、2026年5月に法人設立予定。
-      （事業ドメイン・プロダクト概要は確定後に追記）
+      2025年春から共同創業者2名と起業準備を進めており、2026年5月に本人として正式参画予定。
+      事業ドメインは介護・医療業界。
+      介護・医療業界における信頼獲得を目的とした広報戦略の一環として、
+      2026年4月よりポッドキャスト番組「介護を語ってみるラジオ（カイラジ）」のディレクションを担当。
+    roles:
+      - id: own-podcast-director
+        title: ポッドキャスト ディレクター（企画・録音・編集）
+        period: { start: "2026-04", end: null }
+        description: |
+          共同創業者2名を出演者に迎えた毎週月曜9時配信のポッドキャスト番組
+          「介護を語ってみるラジオ（#カイラジ）」のディレクションを担当。
+          自社の介護・医療業界における信頼獲得を目的とした広報戦略の一環として実施。
+          企画立案・出演者調整・収録進行・編集・配信管理まで全工程を単独で実施。
+          Spotifyを主軸にApple Podcasts等の主要プラットフォームへ配信。
+          介護で困っている人や介護業界に関わる人の助けになることを目指し継続配信中。
+        variants: [long, short]
     variants: [long, short]
 
   # ───────────────────────────────────────────

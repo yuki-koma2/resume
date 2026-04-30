@@ -16,10 +16,14 @@
 
 ## 直近の主な役割
 
-### 株式会社[未定]（2026/05 ~ 現在）
+### 株式会社[未定]（2025/04 ~ 現在）
 
-2025年春から起業準備を進め、2026年5月に法人設立予定。
-（事業ドメイン・プロダクト概要は確定後に追記）
+2025年春から共同創業者2名と起業準備を進めており、2026年5月に本人として正式参画予定。
+事業ドメインは介護・医療業界。
+介護・医療業界における信頼獲得を目的とした広報戦略の一環として、
+
+- **ポッドキャスト ディレクター（企画・録音・編集）**（2026/04 ~ 現在）
+  - 共同創業者2名を出演者に迎えた毎週月曜9時配信のポッドキャスト番組
 
 ### 株式会社3Sunny（2023/04 ~ 現在）
 
@@ -33,4 +37,4 @@
 
 ## 連絡先・公開情報
 
-[GitHub](https://github.com/yuki-koma2) / [Twitter](https://twitter.com/yukikoma4) / [Qiita](https://qiita.com/Yuki-k-lion) / [Note](https://note.com/koma_lion) / [Zenn](https://zenn.dev/yukikoma) / [LAPRAS](https://lapras.com/public/KGEHCDC)
+[GitHub](https://github.com/yuki-koma2) / [Twitter](https://twitter.com/yukikoma4) / [Qiita](https://qiita.com/Yuki-k-lion) / [Note](https://note.com/koma_lion) / [Zenn](https://zenn.dev/yukikoma) / [LAPRAS](https://lapras.com/public/KGEHCDC) / [ポッドキャスト「カイラジ」](https://open.spotify.com/show/0gxY016rSYioNI1HRsPOpS)
