@@ -4,3 +4,6 @@
 /coverage
 # 作業過程の記録（顧客名・内部 KPI・社内コードネーム等の機密情報を含むため public repo にコミットしない）
 /task_memory/
+# ローカル限定の機密検知 lint で使う禁止語リスト（実値を含むため public repo にコミットしない）
+# テンプレートは dictionary/prh_secrets.yml.example
+dictionary/prh_secrets.yml

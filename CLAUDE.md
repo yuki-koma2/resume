@@ -36,11 +36,47 @@ Node version is pinned to `19.2.0` via `.node-version`.
 そのため `task_memory/` は **`.gitignore` で除外しており、コミット禁止**。本ディレクトリ配下の素材は **ローカル作業領域** として扱い、`docs/README.md` 等の公開ファイルへ転記する際に必ず抽象化・匿名化を経る。
 
 具体ルール：
-- 顧客名・病院名は「急性期病院 N 施設」等の規模表現に丸める
-- 数値 KPI は桁・オーダー表現（「4 桁の処理件数」「P95 を百ミリ秒帯で設計」）に丸める
-- 内部コードネームは「自社の管理画面」「自社の主要 SPA」等に丸める
+- 顧客名・病院名は固有名詞を出さず、規模を**概数**（四捨五入）で表す。例：「急性期病院 約10施設」「慢性期病院 数施設」。`N施設` のような完全に伏せた表記までは要求しない
+- 数値 KPI は**概数で書いて良い**（四捨五入・桁を保つレベル）。例：「処理対象 約2,500件」「ヒアリング件数 約10件」「月次リリース 1〜2本」「P95 を 百ミリ秒帯で設計」。読み手に「ざっくり丸めた数」とわかるレベルが目安
+- ただし**内部プロダクト構造を窺わせる粒度の数値は概数でも避ける**。コンポーネント数の内訳、ディレクトリ構成、ファイル種別ごとの件数等。例：「Vue 175ファイル / TS 687ファイル / テスト 342件」→「主要 SPA の4桁規模ファイル群」
+- 内部コードネーム・プロダクト名は「自社の管理画面」「自社の主要 SPA」等に丸める
 - 個人名は協業者・退職者問わず役割名で表現（CEO / PO / デザイナー / 開発チーム / 前任の CTO 等）
-- `task_memory/` 配下のファイルから `docs/` 配下へ転記する前に、上記 4 項目の混入チェックを行う
+- `task_memory/` 配下のファイルから `docs/` 配下へ転記する前に、上記 5 項目の混入チェックを行う
+
+### 機密性ポリシーを支える機械的ガード（A + D 構成）
+
+機密情報の流出を物理的に防ぐ仕組みを 2 層で構成。**禁止語リスト自体も public repo に書けない**ため、`docs/` 検知のリスト（D）はローカル限定。
+
+**A. `task_memory/` のコミット禁止**
+- `.gitignore` で `/task_memory/` を除外（通常の `git add` は遮断）
+- `scripts/hooks/pre-commit` がローカルで `task_memory/` のステージングを reject（`git add -f` 強制対策）
+- `.github/workflows/ci.yaml` の `guard-task-memory` ジョブが PR/push の差分に `task_memory/` が含まれていれば fail（force push にも対応）
+
+**D. ローカル限定の禁止語検知（CI gate にはならない）**
+- `dictionary/prh_secrets.yml`（**`.gitignore` 済**）に病院名・個人名・社内コードネーム等を書く
+- `.textlintrc.local.json` がそれを参照する textlint 設定（コミット可、本体は空）
+- `npm run lint:secrets` で `docs/README.md` を検査
+- `scripts/hooks/pre-commit` が `docs/**/*.md` のステージング時に自動実行
+- `dictionary/prh_secrets.yml` が無い場合は **fail（厳格運用）**。新環境セットアップ時は必ず作成する
+
+#### 新環境セットアップ手順
+
+```shell
+# 1. 依存をインストール
+npm install
+
+# 2. 禁止語リストの作成（テンプレートから複製してから実値を書く）
+cp dictionary/prh_secrets.yml.example dictionary/prh_secrets.yml
+# その後 prh_secrets.yml に顧客名・個人名・社内コードネーム等を書き込む
+
+# 3. git pre-commit フックを .git/hooks/ にシンボリックリンクで配置
+npm run setup:hooks
+```
+
+セットアップ後の運用：
+- `docs/` を編集してコミットすると、pre-commit が自動で `lint:secrets` を実行
+- `task_memory/` を誤ってステージングすると pre-commit が即座に reject
+- 既存禁止語に追加するときは `dictionary/prh_secrets.yml`（gitignored）に直接追記する
 
 ### レジュメ更新ワークフロー
 - 真実は `docs/README.md`。ただし対外的なポートフォリオは LAPRAS にも分散しており、**LAPRAS と乖離が出やすい**。
@@ -54,8 +90,10 @@ Node version is pinned to `19.2.0` via `.node-version`.
 npm install              # install dependencies
 npm run lint             # textlint docs/README.md (CI runs this)
 npm run lint:fix         # textlint --fix
+npm run lint:secrets     # ローカル限定の機密検知 lint（dictionary/prh_secrets.yml 必須）
 npm test                 # jest (collectCoverage is on by default)
 npm run build            # md-to-pdf docs/README.md -> dist/resume.pdf
+npm run setup:hooks      # git pre-commit フックを配置（新環境で 1 度実行）
 ```
 
 Run a single test: `npm test -- <path-or-name-pattern>` (e.g. `npm test -- dictionary`).

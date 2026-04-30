@@ -10,7 +10,9 @@
     "lint": "textlint docs/README.md",
     "lint:fix": "npm run lint -- fix",
     "lint:generated": "textlint docs/README_generated.md docs/README_summary.md",
+    "lint:secrets": "textlint -c .textlintrc.local.json docs/README.md docs/README_generated.md docs/README_summary.md",
     "test": "jest",
+    "setup:hooks": "bash scripts/install-hooks.sh",
     "build": "md-to-pdf docs/README.md --config-file config/md-to-pdf.config.json",
     "generate": "ts-node scripts/generate.ts",
     "validate": "ts-node scripts/validate.ts"

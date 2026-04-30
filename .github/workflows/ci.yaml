@@ -17,3 +17,37 @@ jobs:
       - run: npm ci
       - run: npm run lint
 
+  guard-task-memory:
+    # task_memory/ は機密情報を含むためコミット禁止（CLAUDE.md「task_memory の機密性ポリシー」参照）。
+    # PR / push の差分に task_memory/ 配下が含まれていれば fail する。
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Reject task_memory/ changes
+        # SHA / event_name は GitHub 側が hex 40 桁・列挙型で制御するためシェル展開しても安全。
+        # security 警告が出るが本ケースでは過剰反応のため env 経由にしない。
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE="${{ github.event.pull_request.base.sha }}"
+            HEAD="${{ github.event.pull_request.head.sha }}"
+          else
+            BASE="${{ github.event.before }}"
+            HEAD="${{ github.sha }}"
+          fi
+          # 初回 push（BASE が空 / all-zero）の場合は比較できないのでスキップ
+          if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ]; then
+            echo "Skipping (no base commit to compare)."
+            exit 0
+          fi
+          CHANGED=$(git diff --name-only "$BASE" "$HEAD" | grep '^task_memory/' || true)
+          if [ -n "$CHANGED" ]; then
+            echo "ERROR: task_memory/ 配下のファイルがコミットされています。" >&2
+            echo "       CLAUDE.md「task_memory の機密性ポリシー」を参照してください。" >&2
+            echo "" >&2
+            echo "$CHANGED" | sed 's/^/  /' >&2
+            exit 1
+          fi
+          echo "OK: task_memory/ 配下に変更はありません。"
+

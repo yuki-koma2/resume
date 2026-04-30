@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "prh": {
+      "rulePaths": ["./dictionary/prh_secrets.yml"]
+    }
+  },
+  "plugins": {
+    "@textlint/markdown": true
+  }
+}
