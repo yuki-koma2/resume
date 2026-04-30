@@ -142,10 +142,15 @@
   - React
   - Next.js
   - Vue
+  - NestJS
   - Google Cloud
   - MSA
   - Firebase
   - Cloud Functions V2
+  - Cloud Run
+  - Cloud Endpoints
+  - Cloud Datastore
+  - OpenAPI
   - Node.js
   - Clean Architecture
   - DDD
@@ -170,6 +175,10 @@ PdM主務と兼任しつつ、組織側の技術ガバナンスを担当。
   - 自社の管理画面PoCを単独実装（Next.js 15 / Clean Architecture / DDD / RBAC / Firebase周辺）。最終的に組織方針との兼ね合いで本番投入は見送り
   - データダッシュボードPJのキックオフから関与（観点整理から）
   - 新規事業の案出し / HOW検討 / 施策フィードバック
+  - 【共通基盤プラットフォームPJ】自社プロダクト群が横断利用する共通基盤を0→1で単独設計・実装（マイクロサービス2種、百コミット超）。Cloud Run / Cloud Endpoints / Cloud Datastore中心のGCPネイティブ構成で本番稼働。3サービス目以降の追加コストを最小化する横展開可能な土台まで完成
+  - 【共通基盤プラットフォームPJ】DDDベースのドメインモデリングを徹底（Value ObjectとしてのID強制 / 汎用Repository抽象 / 振る舞いをドメインに閉じ込めた集約）。ビジネス意味のカスタム例外階層と専用ExceptionFilterを整備。リトライ可能性をエラー型自体に持たせ、上位の運用判断を容易化
+  - 【共通基盤プラットフォームPJ】OpenAPI 3をSSOT化。コード・ドキュメント・API Gateway設定を1ソースから自動生成（@nestjs/swagger + x-google-backend拡張）。サービス間通信はGoogle ID Token + IAM認可で、API Key発行・配布を不要化
+  - 【共通基盤プラットフォームPJ】ローカルDXから本番運用まで一気通貫で整備。Docker Compose + Datastore Emulatorでローカル完結環境を構築。GitHub Actions matrixとCloud Build → Cloud Runでローリングデプロイ。Renovateで依存自動追従も導入
 
 #### PdMグループ（兼任）
 
@@ -188,8 +197,11 @@ PdM主務と兼任しつつ、組織側の技術ガバナンスを担当。
   - TypeScript
   - Vue
   - Firebase
+  - Firestore
   - Cloud Functions
   - GCP
+  - tsup
+  - GitHub Packages
 
 入社時、「まずは動くものを」を第一に開発が進められていたため、
 技術的負債が貯まり新機能開発のコストが高い状態だった。
@@ -208,6 +220,10 @@ PdM主務と兼任しつつ、組織側の技術ガバナンスを担当。
   - ロギング・モニタリングの構築、パフォーマンス計測とボトルネック分析
   - 障害対応フロー整備、本番アクセス制御棚卸しと再整備
   - ドキュメンテーション（規約・設計思想・働き方）
+  - 【社内共通パッケージPJ】複数アプリ（フロントエンドSPA群とCloud Functions）が横断利用する社内TypeScriptパッケージ群を設計・初期構築。DDDのレイヤをドメイン / スキーマ / リポジトリ / 共通基盤の4つのnpmパッケージに分離し、依存方向をnpm依存関係として固定化。「ドメインからインフラを参照させない」原則をライブラリ境界で物理的に強制
+  - 【社内共通パッケージPJ】TypeScriptの型システムを徹底活用。`IdValueObject` 抽象によりエンティティID取り違えバグをコンパイル時検出。`as const` + `typeof X[number]` パターンでマスタデータを型化（ラベルとコードを一元管理）。`type-fest` の `JsonValue` とFirestoreの `FieldValue` を合成した独自ヘルパーで、永続化のキー漏れ・余剰をコンパイル時検出
+  - 【社内共通パッケージPJ】Firestore依存をドメインから隔離する設計を実現。`DatabaseTimestamp` 抽象、双方向Mapperパターン、`withConverter` 連携を組み合わせ、ドメイン側をFirestore非依存に保ったまま型安全な永続化を担保。テーブル仕様変更時も影響範囲を局所化
+  - 【社内共通パッケージPJ】`tsup` でESM/CJSデュアルパッケージをビルド。conditional exportsによりVue / Node（Cloud Functions）/ Jestの3環境から型安全に利用可能。GitHub Packagesのprivate registryで社内配布。CI matrix並列化とTZ固定で日付境界の業務ロジックをタイムゾーン非依存に検証。引き渡し後1年以上にわたりチームで運用継続
 
 ### 株式会社ビズリーチ（2019/04 ~ 2023/03）
 
