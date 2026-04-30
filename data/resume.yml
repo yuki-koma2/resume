@@ -97,7 +97,7 @@ experiences:
     period: { start: "2023-04", end: null }
     employment_phases:
       - { from: "2023-04", to: "2026-04", form: 正社員 }
-      - { from: "2026-05", to: null,      form: 業務委託（自社と並行） }
+      - { from: "2026-05", to: null,      form: 業務委託（自社と並行・予定） }
     summary: |
       サーバーレス構成で病院間入退院支援 SaaS を提供。
       技術・組織・事業創出を横断して動いている。
