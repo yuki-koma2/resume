@@ -32,7 +32,7 @@
     "js-yaml": "^4.1.0",
     "md-to-pdf": "^5.2.4",
     "prh": "^5.4.4",
-    "textlint": "^13.3.2",
+    "textlint": "^15.6.0",
     "textlint-rule-ja-hiragana-keishikimeishi": "^1.1.0",
     "textlint-rule-ja-no-redundant-expression": "^4.0.1",
     "textlint-rule-preset-ja-spacing": "^2.3.0",
