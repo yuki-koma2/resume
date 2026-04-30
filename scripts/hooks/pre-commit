@@ -1,0 +1,55 @@
+#!/bin/bash
+# pre-commit hook: task_memory/ コミット禁止 + ローカル限定の機密検知 lint
+#
+# CLAUDE.md「task_memory の機密性ポリシー」に基づく。
+# このファイルは scripts/install-hooks.sh で .git/hooks/pre-commit に配置される。
+
+set -e
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+cd "$REPO_ROOT"
+
+# ─────────────────────────────────────────────────────
+# A. task_memory/ 配下のステージングをブロック
+# ─────────────────────────────────────────────────────
+TASK_MEMORY_STAGED=$(git diff --cached --name-only --diff-filter=ACM | grep '^task_memory/' || true)
+if [ -n "$TASK_MEMORY_STAGED" ]; then
+  echo "ERROR: task_memory/ 配下のファイルはコミット禁止です。" >&2
+  echo "       CLAUDE.md「task_memory の機密性ポリシー」を参照してください。" >&2
+  echo "" >&2
+  echo "ステージングされていた task_memory/ 配下のファイル:" >&2
+  echo "$TASK_MEMORY_STAGED" | sed 's/^/  /' >&2
+  echo "" >&2
+  echo "対処: git restore --staged <file> でステージングを解除してください。" >&2
+  exit 1
+fi
+
+# ─────────────────────────────────────────────────────
+# D. ローカル限定の機密検知 lint
+#    dictionary/prh_secrets.yml が無い場合は fail（厳格運用）
+# ─────────────────────────────────────────────────────
+if [ ! -f "dictionary/prh_secrets.yml" ]; then
+  echo "ERROR: dictionary/prh_secrets.yml が存在しません。" >&2
+  echo "       ローカル限定の機密検知 lint を有効化するため、以下を実行してください:" >&2
+  echo "" >&2
+  echo "         cp dictionary/prh_secrets.yml.example dictionary/prh_secrets.yml" >&2
+  echo "         # その後、禁止語（病院名・個人名・社内コードネーム等）を書き込む" >&2
+  echo "" >&2
+  echo "       詳細: CLAUDE.md「task_memory の機密性ポリシー」" >&2
+  exit 1
+fi
+
+# docs/ 配下の md がステージングされている場合だけ lint を実行
+STAGED_DOCS=$(git diff --cached --name-only --diff-filter=ACM | grep -E '^docs/.*\.md$' || true)
+if [ -n "$STAGED_DOCS" ]; then
+  echo "Running secrets lint on staged docs/*.md ..."
+  # shellcheck disable=SC2086
+  if ! npm run --silent lint:secrets -- $STAGED_DOCS; then
+    echo "" >&2
+    echo "ERROR: docs/ 配下に dictionary/prh_secrets.yml の禁止語が混入しています。" >&2
+    echo "       上記の textlint 出力に従って修正してください。" >&2
+    exit 1
+  fi
+fi
+
+exit 0

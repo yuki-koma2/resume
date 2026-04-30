@@ -107,17 +107,41 @@ experiences:
         period: { start: "2025-01", end: null }
         domains: [pdm, new_business, fullstack]
         description: |
-          新しいキャッシュポイントを生むための PoC・事業開発を担当。
-          PoC に協力いただける病院を見つけ、訪問・MTG を綿密に行い、
-          院内システム・業務とのシナジーを生むための企画 / 開発 / 商品化を一気通貫で担当。
-          組織を横断したメンバーから成るチームで動いている。
-          エンジニアは1名のため、データモデリング / 情報設計 / 開発はすべて自分が担当しつつ、
-          AI（Cursor / Cline / Devin 等）を活用して生産性を上げている。
+          新しいキャッシュポイントを生む新規事業・新規オプション商品の企画・開発を主務として担当。
+          顧客（病院）との共同企画、または現場ヒアリングを起点に、事業課題を定義する。
+          要件・仕様への落とし込み、ビジネス側との調整、社内運用設計、上長の意思決定サポート、
+          実装、リリースまでを一気通貫で完遂する役割を担う。
+          具体例：病院と共同企画した医療相談員（MSW）の業務改善 PJ、
+          ヒアリングを起点とした新規オプション商品の企画から本番リリースまで、など。
+          エンジニアは自分一人で動くことが多いため、AI を組み合わせて最短の PoC〜MVP サイクルを回している。
+          使用する AI ツール：Codex / Cursor / Claude Code（開発主軸）、Cline / Devin / Figma MCP / Claude も併用。
         achievements:
-          - { body: "PoC2企画の推進。うち1件は売上目標を持つ" }
-          - { body: "病院訪問・ヒアリングを通じた業務理解と要件定義" }
-          - { body: "AIを活用した最短PoC・MVP化サイクルの確立" }
-        tech: [TypeScript, "Next.js", Supabase, Firebase, GCP]
+          - { body: "急性期病院 約10施設へのヒアリング設計と実施。現場の業務理解から事業課題を定義し、要件定義書 v1.0 を単独執筆", tags: [pdm, hearing] }
+          - { body: "経営目標とユーザー体験の接続を一人で設計（売上目標 → 体験定義 → 阻害要因 → KPI → 改善方針）", tags: [pdm, strategy] }
+          - { body: "ビジネス側（営業・CS）との調整、社内運用設計（CS 連携フロー、障害対応フロー、判断レベルの明文化）まで含めた一貫した提案推進", tags: [pdm, ops] }
+          - { body: "データモデル設計：スキーマ可変＋プラン別表示制御の二層設計で、料金プラン拡張・将来のフィールド追加・配信制御を吸収", tags: [architecture] }
+          - { body: "検索アルゴリズム設計：Web Worker 上の軽量 Index、Geohash・Haversine 距離計算", tags: [architecture, search] }
+          - { body: "外部 API 連携の設計：Google Places API の SessionToken 運用、検索責務分離（自前データ × 外部 API）の判断", tags: [architecture, search] }
+          - { body: "SLO 設計（一覧 P95 を百ミリ秒帯で設計、再検索もユーザー体感を損なわない応答時間帯で設計）と計測スキーマ（イベント計測項目）の単独設計", tags: [observability, slo] }
+          - { body: "BigQuery × Looker Studio でデータ分析基盤・ダッシュボードを単独で設計・整理。Google Analytics 組込までを担当し可視化基盤を整備", tags: [analytics] }
+          - { body: "リリース戦略設計（Feature Flag / カナリア / ロールバック）と障害想定をリリース前から設計", tags: [release] }
+          - { body: "新オプション商品の本番リリースを主導：API 設定・Firestore Rules・Cloud Functions・App Script・数千件規模のマスタデータ準備までを手順化して単独実行", tags: [release] }
+          - { body: "GA 組込リリースを主導。リリース後数週間で主要メトリクス（4桁件規模の利用件数等）を Looker Studio で可視化し改善方針へフィードバック", tags: [release, analytics] }
+          - { body: "改善方針戦略文書（体験定義 → 阻害要因 → 成果優先順位 A/C/B → 大方針 → 施策）を単独執筆。批判的自己評価としてプラン B を併記", tags: [strategy] }
+          - { body: "経営層への段階的承認フローを設計し、意思決定サポートまで完遂（複層の承認ステップを束ねて事業判断に接続）", tags: [stakeholder] }
+        tech:
+          - TypeScript
+          - Vue
+          - Firebase
+          - Cloud Functions
+          - GCP
+          - BigQuery
+          - Looker Studio
+          - Google Places API
+          - Web Worker
+          - Cursor
+          - Cline
+          - Devin
         variants: [long, short]
 
       - id: 3sunny-chief
@@ -125,16 +149,37 @@ experiences:
         period: { start: "2024-09", end: null }
         concurrent_with: [3sunny-pdm-main]
         description: |
-          採用・開発プロセス整備・中長期アーキテクチャ・新規事業支援まで
-          幅広い責務を持つ役割。
+          採用・開発プロセス整備・中長期アーキテクチャ戦略・組織横断の技術判断・
+          新規事業支援まで横断する責務を持つ役割。
+          PdM 主務と兼任しつつ、組織側の技術ガバナンスを担当。
         achievements:
-          - { body: "エンジニア採用業務（広報・面接設計・オンボーディング設計）", tags: [hiring] }
-          - { body: "開発文化醸成・振り返りの習慣化・自己成長の仕組み整備", tags: [process] }
-          - { body: "中長期的な開発戦略・プロダクトアーキテクチャ設計とドキュメンテーション", tags: [architecture] }
-          - { body: "CI/CD改善、監視・計測の仕組み化", tags: [cicd, observability] }
-          - { body: "共通基盤（認証等）の設計・構築（Google Cloud / MSA）", tags: [infrastructure] }
+          - { body: "エンジニア採用業務（採用広報、選考フロー文書化、ペルソナ設計、面接設計、オンボーディング設計）", tags: [hiring] }
+          - { body: "開発文化醸成・振り返りの習慣化・自己成長の仕組み整備、テスト分析・設計のプロセス組み込み", tags: [process] }
+          - { body: "中長期アーキテクチャ戦略の構想と単独でのドキュメンテーション・組織への浸透", tags: [architecture, strategy] }
+          - { body: "CI/CD改善、監視・計測の仕組み化、本番アクセス制御の棚卸しと再整備", tags: [cicd, observability, security] }
+          - { body: "認証・組織横断の共通基盤の設計・構築（Google Cloud / MSA）", tags: [infrastructure] }
+          - { body: "DEV チーム アドバイザリー。戦略寄りの設計レビュー・上流設計レビュー・AI 活用ガイダンスを担当", tags: [advisory] }
+          - { body: "Cloud Functions コードベース分割（V2 / Node.js 22 への移行設計）と他メンバーへの設計指導", tags: [architecture, mentoring] }
+          - { body: "ハーネスエンジニアリング研究レポートを単独執筆し、社内に概念として定着。フロントエンド FW 別のハーネス能力評価まで踏み込み", tags: [ai_research] }
+          - { body: "自社の主要 SPA の Vue 2 → 移行戦略を策定（4桁規模ファイル群を解析、5戦略を比較）。ハーネス観点での再評価を経て React 移行戦略へ転換し、Strangler Fig パターンに基づく複数本の実装指示書まで単独で完成", tags: [migration, strategy] }
+          - { body: "AI 開発運用ノウハウの整備：議論履歴を AI に渡し続けるドキュメンテーション運用を確立し組織伝達", tags: [ai_workflow] }
+          - { body: "社内 AI エバンジェリストとして NotebookLM 等を活用した業務改善プロセスをビジネス側（営業・CS）に展開し、AI 活用の浸透を組織横断で推進", tags: [ai_evangelism, business_enablement] }
+          - { body: "自社の管理画面 PoC を単独実装（Next.js 15 / Clean Architecture / DDD / RBAC / Firebase 周辺）。最終的に組織方針との兼ね合いで本番投入は見送り", tags: [poc, learning] }
+          - { body: "データダッシュボード PJ のキックオフから関与（観点整理から）", tags: [analytics] }
           - { body: "新規事業の案出し / HOW検討 / 施策フィードバック", tags: [new_business] }
-        tech: [TypeScript, "Google Cloud", MSA, Firebase]
+        tech:
+          - TypeScript
+          - React
+          - Next.js
+          - Vue
+          - Google Cloud
+          - MSA
+          - Firebase
+          - Cloud Functions V2
+          - Node.js
+          - Clean Architecture
+          - DDD
+          - Strangler Fig
         variants: [long, short]
 
       - id: 3sunny-pdm-concurrent
@@ -181,7 +226,7 @@ experiences:
     role_label: 採用サポート
     period: { start: "2023-02", end: "2024-12" }
     description: |
-      副業・業務委託として LAPRAS にて採用サポート業務を担当（詳細は控える）。
+      副業・業務委託として LAPRAS にて採用サポート業務を担当。
       多くのエンジニアの経歴を拝見する経験は、
       本業での採用 / 育成 / 評価 / 一部マネジメントと相互に良い効果を生んだ。
     variants: [long]
