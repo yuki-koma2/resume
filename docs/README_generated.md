@@ -184,10 +184,29 @@ PdM主務と兼任しつつ、組織側の技術ガバナンスを担当。
 
 - 期間：2024/06 ~ 2024/12
 - 兼任：3sunny-techlead、3sunny-chief
+- 使用技術
+  - TypeScript
+  - Next.js
+  - React
+  - Vue
+  - Firebase
+  - Firestore
+  - Cloud Run
+  - Document AI
+  - Zod
 
 プロダクト・ユーザー数の増加と要求の多角化が見えてきたため、
 社内横断のPdMグループに兼任で参加。
 プロダクトのビジョンや抱えていた問題点を歴史から紐解き、再定義した。
+並行して新規事業・新機能の模索として複数のPoCを主導。
+
+- やったこと
+  - 【医療文書OCR PoC】自社の医療向けSaaSのドキュメントOCR機能を0→1で単独PoC設計・実装。Next.js 15（App Router）+ Google Cloud Document AI + Firebase App Hostingで構築。Cloud Run実行サービスアカウントによる「キーファイルレス運用」で本番投入時の機密流出可能性を構造的にゼロ化
+  - 【医療文書OCR PoC】gRPCエラーコードを「ユーザー文言・復旧アクション・構造化ログ」の三層へマッピングする設計。Zodでの境界バリデーションとMIME拡張子フォールバックを組み合わせ、医療業務の文字種（ひらがな / カタカナ / CJK漢字）に踏み込んだファイル名サニタイズも実装。SRE視点で「トリアージできる」エラー出力を設計
+  - 【医療文書OCR PoC】信頼度スコアをUIに埋め込んだHITL（Human-in-the-Loop）前提のUX設計。低信頼度時の警告Alert自動表示や5状態FSMでの処理ステータス可視化など、誤抽出が許されない医療ドメイン特有のUXを最初から設計に組み込み。`AGENTS.md` / `GEMINI.md` を整備しマルチエージェント開発体制も同時構築
+  - 【転院依頼自動化PoC】QR / URLクエリ / 直接JSONの3経路から医療データを取り込みFirestoreに保存するNext.js 15 + Firebase製SaaSを0→1で主導。設計・実装・運用基盤までフルスタックで担当（リポジトリの約8割を自身で実装）。dev / stg / prod完全分離 + Cloud Secret Manager連携の運用基盤も構築
+  - 【転院依頼自動化PoC】医療データの非自明な業務ルール（同じJSONも病棟カテゴリ別に必須 / 不要項目が変わる）をZod 3階層スキーマで宣言的に表現。10種類の入院・受入カテゴリ別のrequired / forbiddenをconfigとして定義し、医療仕様の頻繁な更新に強い構造を実現
+  - 【転院依頼自動化PoC】QRの物理容量制限を解消する独自分割プロトコル（TimeStamp / Part=X/Y / Versionヘッダー）を設計・実装。二重バージョン整合チェックで後方互換事故を予防。Edgeミドルウェアから長尺URLクエリをFirestoreに一時保存しUUID参照するtemp-queriesパターンを構築（Cloud Scheduler連携のTTLベースGC込み）
 
 #### テックリード（フルスタック）
 
@@ -196,12 +215,16 @@ PdM主務と兼任しつつ、組織側の技術ガバナンスを担当。
 - 使用技術
   - TypeScript
   - Vue
+  - Nuxt 3
+  - Vuetify
   - Firebase
   - Firestore
   - Cloud Functions
   - GCP
   - tsup
   - GitHub Packages
+  - Turborepo
+  - Amazon Pinpoint
 
 入社時、「まずは動くものを」を第一に開発が進められていたため、
 技術的負債が貯まり新機能開発のコストが高い状態だった。
@@ -224,6 +247,10 @@ PdM主務と兼任しつつ、組織側の技術ガバナンスを担当。
   - 【社内共通パッケージPJ】TypeScriptの型システムを徹底活用。`IdValueObject` 抽象によりエンティティID取り違えバグをコンパイル時検出。`as const` + `typeof X[number]` パターンでマスタデータを型化（ラベルとコードを一元管理）。`type-fest` の `JsonValue` とFirestoreの `FieldValue` を合成した独自ヘルパーで、永続化のキー漏れ・余剰をコンパイル時検出
   - 【社内共通パッケージPJ】Firestore依存をドメインから隔離する設計を実現。`DatabaseTimestamp` 抽象、双方向Mapperパターン、`withConverter` 連携を組み合わせ、ドメイン側をFirestore非依存に保ったまま型安全な永続化を担保。テーブル仕様変更時も影響範囲を局所化
   - 【社内共通パッケージPJ】`tsup` でESM/CJSデュアルパッケージをビルド。conditional exportsによりVue / Node（Cloud Functions）/ Jestの3環境から型安全に利用可能。GitHub Packagesのprivate registryで社内配布。CI matrix並列化とTZ固定で日付境界の業務ロジックをタイムゾーン非依存に検証。引き渡し後1年以上にわたりチームで運用継続
+  - 【介護領域新規SaaS】病院と介護施設をマッチングする新規SaaSを0→1でアーキテクチャ設計・初期実装。Turborepoモノレポ上にNuxt 3 SPA 2本 + Firebase Functions v2を構築。DDD + クリーンアーキテクチャを社内共通パッケージとして切り出し、3アプリ間で型安全に再利用可能化
+  - 【介護領域新規SaaS】Firebase / Firestore × DDDの同居をリポジトリ層4層分離 + 独立パッケージ化で割り切り、ドメイン層をFirestore都合で歪まない構造に。詳細層はinterface / mapper / firebaseSchema / implの4つ。Firestoreのクエリ制約（OR不可 / IN 10件制限 / カーソル仕様）をSpecificationパターンで吸収し、双方向ページング対応のクエリビルダを1クラスに集約
+  - 【介護領域新規SaaS】Firebase Authentication（ID/Pass）+ SMS OTP（Amazon Pinpoint）+ IP CIDR許可リストの3層直交セキュリティ設計。FirebaseのMFAを採用しなかった理由（マルチリージョン / メール認証への切替容易性）までADRとして明文化。共有アカウント運用という業務制約も解に織り込み
+  - 【介護領域新規SaaS】チーム育成も含めて主導。テスト・OOP・DDD未経験のジュニアメンバー複数名をOJTで育成し、SpecificationパターンやDIを伴う型安全モックテストを自力で書ける水準まで引き上げ。「設計を新規メンバーの教科書として書く」方針で、コード・ディレクトリ・命名そのものがOOP/DDD入門の足場となる構造に。ADR運用（テンプレート / 規約整備）を社内文化として定着
 
 ### 株式会社ビズリーチ（2019/04 ~ 2023/03）
 
