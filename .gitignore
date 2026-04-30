@@ -7,3 +7,4 @@
 # ローカル限定の機密検知 lint で使う禁止語リスト（実値を含むため public repo にコミットしない）
 # テンプレートは dictionary/prh_secrets.yml.example
 dictionary/prh_secrets.yml
+.DS_Store
