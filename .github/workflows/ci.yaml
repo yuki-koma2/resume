@@ -17,6 +17,34 @@ jobs:
       - run: npm ci
       - run: npm run lint
 
+  generate-drift:
+    # 単一ソース化（data/resume.yml）の整合性チェック。
+    # YAML を編集したのに `npm run generate` を忘れて生成物が古いまま PR が来たら fail する。
+    # 設計: task_memory/20260428/resume_update/single_source_design.md §6.2
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 19
+      - run: npm ci
+      - run: npm run generate
+      - name: Check no drift in generated docs
+        run: git diff --exit-code docs/README_generated.md docs/README_summary.md
+
+  lint-generated:
+    # 生成物（README_generated.md / README_summary.md）の textlint 検査。
+    # 既存 lint ジョブは docs/README.md（手書き版）のみが対象なので、
+    # 生成テンプレ起因の違反をすり抜けないよう独立ジョブで検査する。
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 19
+      - run: npm ci
+      - run: npm run lint:generated
+
   guard-task-memory:
     # task_memory/ は機密情報を含むためコミット禁止（CLAUDE.md「task_memory の機密性ポリシー」参照）。
     # PR / push の差分に task_memory/ 配下が含まれていれば fail する。
