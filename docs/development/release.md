@@ -76,8 +76,8 @@
 
 `release.yaml` のジョブ `build` が以下のステップを順に実行します（`.github/workflows/release.yaml` 抜粋）。
 
-1. **`actions/checkout@v4`** — リポジトリと全タグをチェックアウト。
-2. **`actions/setup-node@v4` (Node.js 22)** — Node.js のセットアップ。
+1. **`actions/checkout@v7.0.1`** — リポジトリと全タグをチェックアウト。
+2. **`actions/setup-node@v7.0.0` (Node.js 22)** — Node.js のセットアップ。
 3. **`npm ci`** — ロックファイルどおりに依存をインストール。
 4. **`npm run build`** — `md-to-pdf` が `docs/README.md` を読み込み、`config/md-to-pdf.config.json` の設定に従って `dist/resume.pdf` を生成。
 5. **`mathieudutour/github-tag-action@v6.2`** — 直前のタグを起点に、`releaseSize` で指定したパートを 1 つ上げて新しい Git タグを作成（例: `v2.0.4` → `patch` で `v2.0.5`）。
