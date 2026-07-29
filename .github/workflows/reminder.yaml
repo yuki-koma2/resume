@@ -8,12 +8,14 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       issues: write
+      contents: read
     steps:
+      - uses: actions/checkout@v7.0.1
       - name: Get date
         id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+        run: echo "date=$(date +'%Y-%m-%d')" >> "$GITHUB_OUTPUT"
       - name: Create issue
-        uses: peter-evans/create-issue-from-file@v3
+        uses: peter-evans/create-issue-from-file@v6.0.0
         with:
           title: Remind resume update - ${{ steps.date.outputs.date }}
           content-filepath: .github/ISSUE_TEMPLATE/resume-remind.md
