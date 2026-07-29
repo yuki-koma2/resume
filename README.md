@@ -9,6 +9,24 @@
 - TBD web site
 - [PDFはこちらからダウンロード](https://github.com/yuki-koma2/resume/releases)
 
+## ディレクトリ構成
+
+```
+.
+├── docs/                  # 履歴書本体（GitHub Pages の公開対象）
+│   ├── README.md          # 履歴書の本文（textlint / md-to-pdf の入力）
+│   ├── README_en.md       # 英語版（未着手）
+│   └── _config.yml        # GitHub Pages 設定
+├── dictionary/            # textlint の prh 辞書
+│   ├── prh.yml            # エントリポイント（他辞書を import）
+│   ├── prh_ubiquitous.yml # ユビキタス言語（旧名称の検知 等）
+│   └── typo.yml           # 誤字訂正
+├── config/                # md-to-pdf の設定（JSON / CSS）
+├── __test__/              # Jest テスト（プレースホルダ）
+├── .github/workflows/     # CI / リリース / 更新リマインダ
+└── dist/                  # 生成された PDF の出力先（.gitignore 対象）
+```
+
 ## Development
 
 
@@ -46,7 +64,14 @@ patch | 誤字脱字 | 発見次第逐次
 
 #### リリース方法
 
-github actionから手動実行でタグ付け＆リリースを行う。
+GitHub Actions の `release and build pdf` ワークフロー（`.github/workflows/release.yaml`）を `workflow_dispatch` から手動実行します。実行時に `releaseSize`（`patch` / `minor` / `major`）を選択すると、以下が自動で行われます。
+
+1. `npm run build` で `docs/README.md` から `dist/resume.pdf` を生成
+2. `mathieudutour/github-tag-action` で選択したサイズに応じたタグを採番
+3. GitHub Release を作成し、`dist/resume.pdf` を `resume.pdf` という名前のアセットとしてアップロード
+
+リリース後は [Releases ページ](https://github.com/yuki-koma2/resume/releases) から PDF を取得できます。
+
 
 
 ## References

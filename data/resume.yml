@@ -1,0 +1,619 @@
+# 職務経歴書の単一ソース（YAML）
+# schema: scripts/schema/resume.schema.ts
+# 設計: task_memory/20260428/resume_update/single_source_design.md
+#
+# 内容反映状況:
+#   ✅ 既存 docs/README.md の内容を移植
+#   ✅ LAPRAS（2025-04-29 時点）との差分を反映
+#       - 3Sunny の 4 ロール追加
+#       - LAPRAS 採用サポート（副業）追加
+#       - キャリトレ / こころから / ビズリーチ・リアーキの期間訂正
+#       - ビズリーチ全体の終了日 (2023-03) 訂正
+#   ✅ 起業（2026-05 予定）をプレースホルダで追加 — 並行期間表現つき
+#   ⏳ 2025/05〜2026/04 の最新1年分は未反映（last_year_braindump.md 待ち）
+#
+# variants 凡例:
+#   [long]            ... 長尺版にだけ出す（既定値）
+#   [long, short]     ... 長尺版・短縮版の両方に出す
+#   [long, short, en] ... 英語版にも出す（Phase 6 以降）
+
+schema_version: "1.0"
+last_synced_with_lapras: "2026-04-28"
+
+# 短縮版（README_summary.md）の冒頭リード。
+# tagline は 1 行のキャッチ、elevator_pitch は 2〜4 行の自己紹介。
+# ☞ 本人レビュー推奨：自分の売り方は本人にしか書けない。下記は素材ベースのドラフト。
+summary_lead:
+  tagline: "事業創出を担えるエンジニア。テックリード × PdM の二足。2026年5月起業予定。"
+  elevator_pitch: |
+    安定期・グロース期・新規事業の各フェーズを横断して経験。
+    現在は3Sunnyでチーフエンジニア兼PdM主務として、医療ドメインの新規事業をPoCから商品化まで一気通貫で推進中。
+    並行して2026年5月に自社を起業予定。
+    事業課題の解決と組織を整える力で、長期に価値を出す働き方を志向。
+
+basic:
+  name: 小松 優基
+  birth_date: "1995/10/12"
+  location: 神奈川県
+  education: 青山学院大学物理数理学科
+
+accounts:
+  - { type: github,  url: "https://github.com/yuki-koma2",       label: GitHub }
+  - { type: twitter, url: "https://twitter.com/yukikoma4",       label: Twitter }
+  - { type: qiita,   url: "https://qiita.com/Yuki-k-lion",       label: Qiita }
+  - { type: note,    url: "https://note.com/koma_lion",          label: Note }
+  - { type: zenn,    url: "https://zenn.dev/yukikoma",           label: Zenn }
+  - { type: lapras,  url: "https://lapras.com/public/KGEHCDC",   label: LAPRAS }
+  - { type: spotify, url: "https://open.spotify.com/show/0gxY016rSYioNI1HRsPOpS", label: "ポッドキャスト「カイラジ」" }
+
+skills_summary:
+  - JavaScript/TypeScript React/Next.js Vue/Nuxt.jsでのフロントエンド開発・設計
+  - Java Spring Bootでのバックエンド開発・設計
+  - Kotlin Ktorでのバックエンド開発
+  - API設計、テスト設計、データベース設計
+  - AWSでのインフラ運用
+  - CI/CDでの継続的インテグレーション・デプロイ（linterでのコード品質管理自動化）
+  - TDD：テスト駆動開発
+  - DDD：ドメイン駆動開発 / Clean Architecture
+  - アジャイル / スクラム開発、開発プロセス改善
+
+tech_stack:
+  languages: [ts, js, html, css, java, ruby, kotlin]
+  frameworks: [react, nextjs, vue, nuxtjs, spring, rails, mysql, ktor, redux, sass, jest, graphql, nodejs]
+  tools: [idea, atom, github, git, aws, docker, cloudflare, githubactions]
+
+tech_proficiency:
+  # LAPRAS get_tech_skill より
+  - { name: TypeScript, years: "3年以上5年未満" }
+  - { name: Java,       years: "3年以上5年未満" }
+  - { name: Ruby,       years: "1年以上2年未満" }
+  - { name: "Node.js",  years: "2年以上3年未満" }
+  - { name: MySQL,      years: "2年以上3年未満" }
+  - { name: Firebase,   years: "2年以上3年未満" }
+  - { name: GCP,        years: "2年以上3年未満" }
+  - { name: AWS,        years: "2年以上3年未満" }
+
+# 時系列は新しい順。Phase 2 のレンダラで experience.id によりソート・グルーピングを行う想定。
+experiences:
+
+  # ───────────────────────────────────────────
+  # 自社（起業）— プレースホルダ
+  # ───────────────────────────────────────────
+  - id: own-company
+    type: own_company
+    company: "株式会社[未定]"
+    period: { start: "2025-04", end: null }
+    parallel_with: [3sunny]
+    summary_public: |
+      2025年春から共同創業者2名と起業準備を進めており、2026年5月に本人として正式参画予定。
+      事業ドメインは介護・医療業界。
+      介護・医療業界における信頼獲得を目的とした広報戦略の一環として、
+      2026年4月よりポッドキャスト番組「介護を語ってみるラジオ（カイラジ）」のディレクションを担当。
+    roles:
+      - id: own-podcast-director
+        title: ポッドキャスト ディレクター（企画・録音・編集）
+        period: { start: "2026-04", end: null }
+        description: |
+          共同創業者2名を出演者に迎えた毎週月曜9時配信のポッドキャスト番組
+          「介護を語ってみるラジオ（#カイラジ）」のディレクションを担当。
+          自社の介護・医療業界における信頼獲得を目的とした広報戦略の一環として実施。
+          企画立案・出演者調整・収録進行・編集・配信管理まで全工程を単独で実施。
+          Spotifyを主軸にApple Podcasts等の主要プラットフォームへ配信。
+          介護で困っている人や介護業界に関わる人の助けになることを目指し継続配信中。
+        variants: [long, short]
+    variants: [long, short]
+
+  # ───────────────────────────────────────────
+  # 株式会社3Sunny（2023/04 〜 現在、起業後は並行）
+  # ───────────────────────────────────────────
+  - id: 3sunny
+    type: full_time
+    company: 株式会社3Sunny
+    period: { start: "2023-04", end: null }
+    employment_phases:
+      - { from: "2023-04", to: "2026-04", form: 正社員 }
+      - { from: "2026-05", to: null,      form: 業務委託（自社と並行・予定） }
+    summary: |
+      サーバーレス構成で病院間入退院支援 SaaS を提供。
+      技術・組織・事業創出を横断して動いている。
+    roles:
+      - id: 3sunny-pdm-main
+        title: PdMグループ（主務）& 新規事業PJ
+        period: { start: "2025-01", end: null }
+        domains: [pdm, new_business, fullstack]
+        description: |
+          新しいキャッシュポイントを生む新規事業・新規オプション商品の企画・開発を主務として担当。
+          顧客（病院）との共同企画、または現場ヒアリングを起点に、事業課題を定義する。
+          要件・仕様への落とし込み、ビジネス側との調整、社内運用設計、上長の意思決定サポート、
+          実装、リリースまでを一気通貫で完遂する役割を担う。
+          具体例：病院と共同企画した医療相談員（MSW）の業務改善 PJ、
+          ヒアリングを起点とした新規オプション商品の企画から本番リリースまで、など。
+          エンジニアは自分一人で動くことが多いため、AI を組み合わせて最短の PoC〜MVP サイクルを回している。
+          使用する AI ツール：Codex / Cursor / Claude Code（開発主軸）、Cline / Devin / Figma MCP / Claude も併用。
+        achievements:
+          - { body: "急性期病院 約10施設へのヒアリング設計と実施。現場の業務理解から事業課題を定義し、要件定義書 v1.0 を単独執筆", tags: [pdm, hearing] }
+          - { body: "経営目標とユーザー体験の接続を一人で設計（売上目標 → 体験定義 → 阻害要因 → KPI → 改善方針）", tags: [pdm, strategy] }
+          - { body: "ビジネス側（営業・CS）との調整、社内運用設計（CS 連携フロー、障害対応フロー、判断レベルの明文化）まで含めた一貫した提案推進", tags: [pdm, ops] }
+          - { body: "データモデル設計：スキーマ可変＋プラン別表示制御の二層設計で、料金プラン拡張・将来のフィールド追加・配信制御を吸収", tags: [architecture] }
+          - { body: "検索アルゴリズム設計：Web Worker 上の軽量 Index、Geohash・Haversine 距離計算", tags: [architecture, search] }
+          - { body: "外部 API 連携の設計：Google Places API の SessionToken 運用、検索責務分離（自前データ × 外部 API）の判断", tags: [architecture, search] }
+          - { body: "SLO 設計（一覧 P95 を百ミリ秒帯で設計、再検索もユーザー体感を損なわない応答時間帯で設計）と計測スキーマ（イベント計測項目）の単独設計", tags: [observability, slo] }
+          - { body: "BigQuery × Looker Studio でデータ分析基盤・ダッシュボードを単独で設計・整理。Google Analytics 組込までを担当し可視化基盤を整備", tags: [analytics] }
+          - { body: "リリース戦略設計（Feature Flag / カナリア / ロールバック）と障害想定をリリース前から設計", tags: [release] }
+          - { body: "新オプション商品の本番リリースを主導：API 設定・Firestore Rules・Cloud Functions・App Script・数千件規模のマスタデータ準備までを手順化して単独実行", tags: [release] }
+          - { body: "GA 組込リリースを主導。リリース後数週間で主要メトリクス（4桁件規模の利用件数等）を Looker Studio で可視化し改善方針へフィードバック", tags: [release, analytics] }
+          - { body: "改善方針戦略文書（体験定義 → 阻害要因 → 成果優先順位 A/C/B → 大方針 → 施策）を単独執筆。批判的自己評価としてプラン B を併記", tags: [strategy] }
+          - { body: "経営層への段階的承認フローを設計し、意思決定サポートまで完遂（複層の承認ステップを束ねて事業判断に接続）", tags: [stakeholder] }
+        tech:
+          - TypeScript
+          - Vue
+          - Firebase
+          - Cloud Functions
+          - GCP
+          - BigQuery
+          - Looker Studio
+          - Google Places API
+          - Web Worker
+          - Cursor
+          - Cline
+          - Devin
+        variants: [long, short]
+
+      - id: 3sunny-chief
+        title: チーフエンジニア
+        period: { start: "2024-09", end: null }
+        concurrent_with: [3sunny-pdm-main]
+        description: |
+          採用・開発プロセス整備・中長期アーキテクチャ戦略・組織横断の技術判断・
+          新規事業支援まで横断する責務を持つ役割。
+          PdM 主務と兼任しつつ、組織側の技術ガバナンスを担当。
+        achievements:
+          - { body: "エンジニア採用業務（採用広報、選考フロー文書化、ペルソナ設計、面接設計、オンボーディング設計）", tags: [hiring] }
+          - { body: "開発文化醸成・振り返りの習慣化・自己成長の仕組み整備、テスト分析・設計のプロセス組み込み", tags: [process] }
+          - { body: "中長期アーキテクチャ戦略の構想と単独でのドキュメンテーション・組織への浸透", tags: [architecture, strategy] }
+          - { body: "CI/CD改善、監視・計測の仕組み化、本番アクセス制御の棚卸しと再整備", tags: [cicd, observability, security] }
+          - { body: "認証・組織横断の共通基盤の設計・構築（Google Cloud / MSA）", tags: [infrastructure] }
+          - { body: "DEV チーム アドバイザリー。戦略寄りの設計レビュー・上流設計レビュー・AI 活用ガイダンスを担当", tags: [advisory] }
+          - { body: "Cloud Functions コードベース分割（V2 / Node.js 22 への移行設計）と他メンバーへの設計指導", tags: [architecture, mentoring] }
+          - { body: "ハーネスエンジニアリング研究レポートを単独執筆し、社内に概念として定着。フロントエンド FW 別のハーネス能力評価まで踏み込み", tags: [ai_research] }
+          - { body: "自社の主要 SPA の Vue 2 → 移行戦略を策定（4桁規模ファイル群を解析、5戦略を比較）。ハーネス観点での再評価を経て React 移行戦略へ転換し、Strangler Fig パターンに基づく複数本の実装指示書まで単独で完成", tags: [migration, strategy] }
+          - { body: "AI 開発運用ノウハウの整備：議論履歴を AI に渡し続けるドキュメンテーション運用を確立し組織伝達", tags: [ai_workflow] }
+          - { body: "社内 AI エバンジェリストとして NotebookLM 等を活用した業務改善プロセスをビジネス側（営業・CS）に展開し、AI 活用の浸透を組織横断で推進", tags: [ai_evangelism, business_enablement] }
+          - { body: "自社の管理画面 PoC を単独実装（Next.js 15 / Clean Architecture / DDD / RBAC / Firebase 周辺）。最終的に組織方針との兼ね合いで本番投入は見送り", tags: [poc, learning] }
+          - { body: "データダッシュボード PJ のキックオフから関与（観点整理から）", tags: [analytics] }
+          - { body: "新規事業の案出し / HOW検討 / 施策フィードバック", tags: [new_business] }
+          - { body: "【共通基盤プラットフォーム PJ】自社プロダクト群が横断利用する共通基盤を 0→1 で単独設計・実装（マイクロサービス 2 種、百コミット超）。Cloud Run / Cloud Endpoints / Cloud Datastore 中心の GCP ネイティブ構成で本番稼働。3 サービス目以降の追加コストを最小化する横展開可能な土台まで完成", tags: [architecture, gcp, microservices] }
+          - { body: "【共通基盤プラットフォーム PJ】DDD ベースのドメインモデリングを徹底（Value Object としての ID 強制 / 汎用 Repository 抽象 / 振る舞いをドメインに閉じ込めた集約）。ビジネス意味のカスタム例外階層と専用 ExceptionFilter を整備。リトライ可能性をエラー型自体に持たせ、上位の運用判断を容易化", tags: [architecture, ddd] }
+          - { body: "【共通基盤プラットフォーム PJ】OpenAPI 3 を SSOT 化。コード・ドキュメント・API Gateway 設定を 1 ソースから自動生成（@nestjs/swagger + x-google-backend 拡張）。サービス間通信は Google ID Token + IAM 認可で、API Key 発行・配布を不要化", tags: [api, security, openapi] }
+          - { body: "【共通基盤プラットフォーム PJ】ローカル DX から本番運用まで一気通貫で整備。Docker Compose + Datastore Emulator でローカル完結環境を構築。GitHub Actions matrix と Cloud Build → Cloud Run でローリングデプロイ。Renovate で依存自動追従も導入", tags: [dx, cicd] }
+        tech:
+          - TypeScript
+          - React
+          - Next.js
+          - Vue
+          - NestJS
+          - Google Cloud
+          - MSA
+          - Firebase
+          - Cloud Functions V2
+          - Cloud Run
+          - Cloud Endpoints
+          - Cloud Datastore
+          - OpenAPI
+          - Node.js
+          - Clean Architecture
+          - DDD
+          - Strangler Fig
+        variants: [long, short]
+
+      - id: 3sunny-pdm-concurrent
+        title: PdMグループ（兼任）
+        period: { start: "2024-06", end: "2024-12" }
+        concurrent_with: [3sunny-techlead, 3sunny-chief]
+        description: |
+          プロダクト・ユーザー数の増加と要求の多角化が見えてきたため、
+          社内横断のPdMグループに兼任で参加。
+          プロダクトのビジョンや抱えていた問題点を歴史から紐解き、再定義した。
+          並行して新規事業・新機能の模索として複数の PoC を主導。
+        achievements:
+          - { body: "【医療文書 OCR PoC】自社の医療向け SaaS のドキュメント OCR 機能を 0→1 で単独 PoC 設計・実装。Next.js 15（App Router）+ Google Cloud Document AI + Firebase App Hosting で構築。Cloud Run 実行サービスアカウントによる「キーファイルレス運用」で本番投入時の機密流出可能性を構造的にゼロ化", tags: [poc, ocr, gcp] }
+          - { body: "【医療文書 OCR PoC】gRPC エラーコードを「ユーザー文言・復旧アクション・構造化ログ」の三層へマッピングする設計。Zod での境界バリデーションと MIME 拡張子フォールバックを組み合わせ、医療業務の文字種（ひらがな / カタカナ / CJK 漢字）に踏み込んだファイル名サニタイズも実装。SRE 視点で「トリアージできる」エラー出力を設計", tags: [api, error_handling] }
+          - { body: "【医療文書 OCR PoC】信頼度スコアを UI に埋め込んだ HITL（Human-in-the-Loop）前提の UX 設計。低信頼度時の警告 Alert 自動表示や 5 状態 FSM での処理ステータス可視化など、誤抽出が許されない医療ドメイン特有の UX を最初から設計に組み込み。`AGENTS.md` / `GEMINI.md` を整備しマルチエージェント開発体制も同時構築", tags: [ux, hitl, ai_workflow] }
+          - { body: "【転院依頼自動化 PoC】QR / URL クエリ / 直接 JSON の 3 経路から医療データを取り込み Firestore に保存する Next.js 15 + Firebase 製 SaaS を 0→1 で主導。設計・実装・運用基盤までフルスタックで担当（リポジトリの約 8 割を自身で実装）。dev / stg / prod 完全分離 + Cloud Secret Manager 連携の運用基盤も構築", tags: [poc, fullstack, firebase] }
+          - { body: "【転院依頼自動化 PoC】医療データの非自明な業務ルール（同じ JSON も病棟カテゴリ別に必須 / 不要項目が変わる）を Zod 3 階層スキーマで宣言的に表現。10 種類の入院・受入カテゴリ別の required / forbidden を config として定義し、医療仕様の頻繁な更新に強い構造を実現", tags: [architecture, zod] }
+          - { body: "【転院依頼自動化 PoC】QR の物理容量制限を解消する独自分割プロトコル（TimeStamp / Part=X/Y / Version ヘッダー）を設計・実装。二重バージョン整合チェックで後方互換事故を予防。Edge ミドルウェアから長尺 URL クエリを Firestore に一時保存し UUID 参照する temp-queries パターンを構築（Cloud Scheduler 連携の TTL ベース GC 込み）", tags: [protocol, infra] }
+        tech: [TypeScript, "Next.js", React, Vue, Firebase, Firestore, "Cloud Run", "Document AI", Zod]
+        variants: [long]
+
+      - id: 3sunny-techlead
+        title: テックリード（フルスタック）
+        period: { start: "2023-04", end: "2024-08" }
+        domains: [backend, frontend, infra]
+        description: |
+          入社時、「まずは動くものを」を第一に開発が進められていたため、
+          技術的負債が貯まり新機能開発のコストが高い状態だった。
+          「スケーラブルかつ高速で並行開発に耐えられる開発体制」にするための
+          基盤作りを担当。
+        achievements:
+          - { body: "開発プロセスの改善 / リリースプロセスの効率化（GitHub Actionsによる自動化）" }
+          - { body: "Clean Architecture / DDD の考え方をフロントに落とし込み、疎結合・高凝集の基盤を整備" }
+          - { body: "テストプロセスの導入とテスト戦略構築" }
+          - { body: "コード品質を継続的に高めるための開発技法勉強会を毎週1時間チームに対して実施" }
+          - { body: "既存事業の負債解消、新規事業の技術選定・設計" }
+          - { body: "出張してユーザーにインタビュー / 業務実態の把握" }
+          - { body: "育成・(一部)評価。キャリアチェンジ組向けに新卒研修レベルでの育成施策" }
+          - { body: "エンジニア採用、社内管理用ツール・運用改善" }
+          - { body: "ロギング・モニタリングの構築、パフォーマンス計測とボトルネック分析" }
+          - { body: "障害対応フロー整備、本番アクセス制御棚卸しと再整備" }
+          - { body: "ドキュメンテーション（規約・設計思想・働き方）" }
+          - { body: "【社内共通パッケージ PJ】複数アプリ（フロントエンド SPA 群と Cloud Functions）が横断利用する社内 TypeScript パッケージ群を設計・初期構築。DDD のレイヤをドメイン / スキーマ / リポジトリ / 共通基盤の 4 つの npm パッケージに分離し、依存方向を npm 依存関係として固定化。「ドメインからインフラを参照させない」原則をライブラリ境界で物理的に強制", tags: [architecture, ddd] }
+          - { body: "【社内共通パッケージ PJ】TypeScript の型システムを徹底活用。`IdValueObject` 抽象によりエンティティ ID 取り違えバグをコンパイル時検出。`as const` + `typeof X[number]` パターンでマスタデータを型化（ラベルとコードを一元管理）。`type-fest` の `JsonValue` と Firestore の `FieldValue` を合成した独自ヘルパーで、永続化のキー漏れ・余剰をコンパイル時検出", tags: [typescript, type_design] }
+          - { body: "【社内共通パッケージ PJ】Firestore 依存をドメインから隔離する設計を実現。`DatabaseTimestamp` 抽象、双方向 Mapper パターン、`withConverter` 連携を組み合わせ、ドメイン側を Firestore 非依存に保ったまま型安全な永続化を担保。テーブル仕様変更時も影響範囲を局所化", tags: [architecture, firestore] }
+          - { body: "【社内共通パッケージ PJ】`tsup` で ESM/CJS デュアルパッケージをビルド。conditional exports により Vue / Node（Cloud Functions）/ Jest の 3 環境から型安全に利用可能。GitHub Packages の private registry で社内配布。CI matrix 並列化と TZ 固定で日付境界の業務ロジックをタイムゾーン非依存に検証。引き渡し後 1 年以上にわたりチームで運用継続", tags: [tooling, cicd, ops] }
+          - { body: "【介護領域新規 SaaS】病院と介護施設をマッチングする新規 SaaS を 0→1 でアーキテクチャ設計・初期実装。Turborepo モノレポ上に Nuxt 3 SPA 2 本 + Firebase Functions v2 を構築。DDD + クリーンアーキテクチャを社内共通パッケージとして切り出し、3 アプリ間で型安全に再利用可能化", tags: [architecture, monorepo, ddd] }
+          - { body: "【介護領域新規 SaaS】Firebase / Firestore × DDD の同居をリポジトリ層 4 層分離 + 独立パッケージ化で割り切り、ドメイン層を Firestore 都合で歪まない構造に。詳細層は interface / mapper / firebaseSchema / impl の 4 つ。Firestore のクエリ制約（OR 不可 / IN 10 件制限 / カーソル仕様）を Specification パターンで吸収し、双方向ページング対応のクエリビルダを 1 クラスに集約", tags: [architecture, firestore, ddd] }
+          - { body: "【介護領域新規 SaaS】Firebase Authentication（ID/Pass）+ SMS OTP（Amazon Pinpoint）+ IP CIDR 許可リストの 3 層直交セキュリティ設計。Firebase の MFA を採用しなかった理由（マルチリージョン / メール認証への切替容易性）まで ADR として明文化。共有アカウント運用という業務制約も解に織り込み", tags: [security, auth, adr] }
+          - { body: "【介護領域新規 SaaS】チーム育成も含めて主導。テスト・OOP・DDD 未経験のジュニアメンバー複数名を OJT で育成し、Specification パターンや DI を伴う型安全モックテストを自力で書ける水準まで引き上げ。「設計を新規メンバーの教科書として書く」方針で、コード・ディレクトリ・命名そのものが OOP/DDD 入門の足場となる構造に。ADR 運用（テンプレート / 規約整備）を社内文化として定着", tags: [mentoring, culture, adr] }
+          - { body: "【介護領域新規 SaaS】マルチフロント構成の技術選定を意図的に分離（病院向け Vuetify / 施設向け Tailwind + Clean Architecture / DDD 寄り）。早すぎる抽象化を避けて共通化をドメイン層に限定する技術判断と、ジュニアエンジニア育成の学習ステップ設計（中間レベル → 本来到達レベルへ段階的に上げる）の両側面を兼ねた選定。Firestore セキュリティルールに role ベースと所属ベースの二層権限モデルを実装。「やらない」判断も ADR に残し、後続の議論コストを削減", tags: [architecture, security, mentoring, adr] }
+          - { body: "【介護領域 SaaS 管理画面】介護領域 SaaS の運用管理画面（Back Office）を 0→1 で単独設計・初期実装。Next.js 13 + NestJS 10 + Firebase + PostgreSQL（Prisma）の 3 層構成（フロント / API サーバ / Cloud Functions）を構築。フロントエンドに Clean Architecture / DDD を本格適用。`I*Repository` 抽象 + Mapper パターン + Context-based DI で、将来のサーバー API 化を見越した永続層分離を先制的に整備", tags: [architecture, fullstack, ddd] }
+          - { body: "【介護領域 SaaS 管理画面】Firestore Security Rules（数百行規模）を「バックエンドの代替」として徹底活用。`checkFK`（NoSQL の外部キー制約相当）、スキーマ + 不変フィールド検証、ドメイン値検証をすべてルールに集約し、フロントを信用しないゼロトラスト設計を実現。`DatabaseTimestamp` 値オブジェクトラッパーで Firestore Timestamp 取り扱いを安全化し、`undefined` 系の頻出ランタイムエラーを根本撲滅", tags: [security, firestore, ddd] }
+          - { body: "【介護領域 SaaS 管理画面】「ジュニアでも追える Clean Architecture」を設計テーマに採用。InversifyJS のような重量 IoC を避け Context + new で軽量 DI。UseCase 層を切らず Service + Repository の 2 層に圧縮、Mapper / Repository の境界だけは強く守る最小構成。TODO / NOTE コメントを「次に学ぶべき概念」のロードマップとしてリポジトリに埋め込み、テスト・OOP・DDD 未経験のジュニア 1 名を次期テックリードまで育成。運用移管後も破綻なくメンテナンスが継続", tags: [mentoring, architecture, learning] }
+        tech: [TypeScript, Vue, "Nuxt 3", Vuetify, "Next.js", React, NestJS, Prisma, PostgreSQL, Firebase, Firestore, "Cloud Functions", "Cloud Run", GCP, tsup, "GitHub Packages", Turborepo, "Amazon Pinpoint"]
+        variants: [long]
+    variants: [long, short]
+
+  # ───────────────────────────────────────────
+  # LAPRAS株式会社（副業）
+  # ───────────────────────────────────────────
+  - id: lapras-side
+    type: side_job
+    company: LAPRAS株式会社
+    role_label: 採用サポート
+    period: { start: "2023-02", end: "2024-12" }
+    description: |
+      副業・業務委託として LAPRAS にて採用サポート業務を担当。
+      多くのエンジニアの経歴を拝見する経験は、
+      本業での採用 / 育成 / 評価 / 一部マネジメントと相互に良い効果を生んだ。
+    variants: [long]
+
+  # ───────────────────────────────────────────
+  # 株式会社ビズリーチ（2019/04 〜 2023/03）
+  # ───────────────────────────────────────────
+  - id: bizreach
+    type: full_time
+    company: 株式会社ビズリーチ
+    period: { start: "2019-04", end: "2023-03" }
+    summary: |
+      新卒入社。キャリトレ事業部 → 社長室新規事業 → ビズリーチ事業部 と部署異動を経験。
+      安定期 / グロース期 / 新規事業の各フェーズを経験。
+    roles:
+      - id: bizreach-rearch
+        title: ビズリーチ事業部 リアーキテクチャグループ
+        period: { start: "2022-11", end: "2023-03" }
+        domains: [backend]
+        description: |
+          現行の仕様をなるべく変えず影響を出さないように新しいアーキテクチャへ置き換えるプロジェクト。
+          既存システムの負債に向き合い、DB変更不可という制約の中、
+          今後の発展を見越して負債を解消することがミッション。
+          主に命名・Domain設計・API設計で負債解消に向き合った。
+          開発手法は Clean Architecture / TDD / モブプロ・ペアプロ / スクラム開発。
+        achievements:
+          - { body: "resume / 職務経歴画面の新アーキテクチャへの移行（在籍期間で進行中）" }
+          - { body: "API schema 規約の自動化（レビュー自動化）とカスタムルールへのユニットテスト導入" }
+          - { body: "ユビキタス言語の自動チェックを CI に組み込み" }
+          - { body: "MTG等の働き方改善でチーム生産性を向上。会議のフォーマットや議論方法を整備し、課題の再定義と認識差異の可視化を主導" }
+        tech: [Java, "Spring Boot", "OpenAPI", AWS]
+        variants: [long]
+
+      - id: bizreach-newbiz
+        title: 社長室 新規事業推進チーム
+        period: { start: "2022-06", end: "2022-10" }
+        domains: [frontend, backend]
+        description: |
+          分社化初の新規事業推進プロジェクトに7名チームの一員として参加。
+          自分はフロントエンドを主担当。
+          常に1か月先すら見えない中で質とスピードのバランスを考えながら開発。
+          チームが小さいため、開発業務以外（何を開発するかの議論を含む）にも関与。
+          会社事情と社会情勢を踏まえて事業撤退が決定したため、11月に異動。
+        achievements:
+          - { body: "フロントエンドのUI刷新" }
+          - { body: "コード品質向上、責務分離、再設計、テストの導入" }
+          - { body: "日程調整機能およびステータスの再設計" }
+          - { body: "Nuxt2のバージョンアップ計画策定（事業撤退により計画途中で頓挫）" }
+          - { body: "既存事業とのシナジー観点でのユーザー体験ヒアリング" }
+        tech: [Vue, Nuxt, Kotlin, Ktor, "OpenAPI", AWS]
+        variants: [long]
+
+      - id: bizreach-careertrek
+        title: キャリトレ事業部
+        period: { start: "2019-09", end: "2022-05" }
+        domains: [frontend, backend, db, infra]
+        description: |
+          若手向け転職サイト「キャリトレ」の運用と開発。
+          フロント / バックエンド / DB設計 / 一部インフラ（terraform）を担当。
+          チームは5名程度、エンジニアは事業部全体で12〜20名規模。
+          仕様調整・実装・テスト実施に加え、社内問い合わせ対応・お客様トラブル対応・
+          アラート対応と監視も担う。
+        achievements:
+          - { body: "プロダクトフルリニューアル後のバグ対処とリファクタリング（契約周りの責務分割、Empty画面のアクション導線設置など）" }
+          - { body: "ABテスト導入（技術選定・一部設計・実装・リリース手順調整・運用ドキュメント作成）" }
+          - { body: "自動抽出機能の導入" }
+          - { body: "B側工数削減のための機能開発と一部設計、応募リクエスト機能の設計・実装" }
+          - { body: "各種ライブラリのバージョンアップ、ファイルアップロード機能実装" }
+          - { body: "iOS通知証明書周りの再設計（事業撤退のため実装は未実施）" }
+          - { body: "新メンバーのサポート / メンタリング" }
+          - { body: "生産性分析基盤の導入（Asana / Jiraダッシュボード / GitHub Project + Spreadsheet 連携）" }
+          - { body: "エンジニアと営業組織間のリードタイム短縮、ドキュメント整備による属人性排除" }
+          - { body: "社内権限申請・管理フローの再構築" }
+          - { body: "開発体制改善 — 議論・振り返り方法を再設計し、本質的課題に取り組める仕組みを構築" }
+        tech: [React, "OpenAPI", Cypress, Java, "Spring Boot", "Spring Batch", AWS, DDD, "Atomic Design", Datadog, Sentry]
+        variants: [long]
+
+      - id: bizreach-internal-projects
+        title: 社内プロジェクト
+        period: { start: "2019-10", end: "2021-05" }
+        sub_items:
+          - name: 新卒研修企画リーダー
+            period: "2021-02..2021-05"
+            body: 21新卒エンジニア研修運営（運営リーダー）と開発課題実施時のメンター
+          - name: 顧客データ分析（Datasaber試験合格）
+            period: "2020-10..2020-12"
+            body: tableauを利用してPOにプレゼン、計測要件の仕様調整
+          - name: 特別企画推進チーム（推進者）
+            period: "2019-10..2020-03"
+            body: 会社役員に新卒が直接質問できる機会を作るなど、新卒向けイベントを計5回開催。社内報発行チームも兼任
+        variants: [long]
+    variants: [long]
+
+  # ───────────────────────────────────────────
+  # 株式会社こころから（副業）
+  # ───────────────────────────────────────────
+  - id: kokorokara-side
+    type: side_job
+    company: 株式会社こころから
+    role_label: フロントエンドエンジニア
+    period: { start: "2021-09", end: "2022-12" }
+    description: |
+      業務委託契約での開発業務。社員10名規模のベンチャー。
+      ピクセルパーフェクトを目指す開発スタイルで UIUX に力を入れた開発体制。
+    tech: [React, "Next.js", BFF, "Nest.js", GraphQL, GCP]
+    variants: [long]
+
+  # ───────────────────────────────────────────
+  # NPO法人 アイセック・ジャパン
+  # ───────────────────────────────────────────
+  - id: aiesec
+    type: volunteer
+    company: 特定非営利活動法人アイセック・ジャパン
+    role_label: 中央事務局 / 広報ブランドマーケティング戦略 / 情報システム管理
+    period: { start: "2015-04", end: "2019-03" }
+    description: |
+      世界最大級の学生団体の日本支部事務局でデザイナー兼エンジニアとして従事。
+      当時の日本で2000人規模、所属チームは5〜6名。
+    achievements:
+      - { body: "名刺などの定型デザイン作成を自動化" }
+      - { body: "数十個のLAMPサーバー管理・構築" }
+      - { body: "マーケティングフレームワークをプロジェクトに最適化して適応" }
+      - { body: "複数のHP/LPをデザイン・設計・構築" }
+      - { body: "アルムナイインタビュー記事サイトの企画・構築・運用" }
+      - { body: "広報物（ビラ・冊子・動画）の作成、内部向けブランディング施策の製作" }
+      - { body: "ブランド・デザインガイドラインの作成と運用" }
+    tech: [Linux, WordPress, HTML, CSS, JavaScript, Ruby, GAS, PhotoShop, Illustrator, InDesign, XD, "Premiere Pro", "After Effects"]
+    variants: [long]
+
+  # ───────────────────────────────────────────
+  # 短期プロジェクト：NPO HP・サーバー刷新
+  # ───────────────────────────────────────────
+  - id: npo-hp-renewal
+    type: short_project
+    company: 特定非営利活動法人アイセック・ジャパン（学生時代所属）
+    role_label: HP・サーバー刷新リーダー
+    period: { start: "2021-04", end: "2021-09" }
+    description: |
+      学生時代に所属していたNPOのHPを刷新。
+      レンタルサーバー・LAMP構成で30個以上あったサーバー群をサーバーレス構成へ移行。
+      関わったチームは5名程度、実作業は3名（自分が9割）。
+    achievements:
+      - { body: "LAMP構成 → サーバーレス構成 への移行" }
+      - { body: "リリースフローを簡略化、Linuxサーバー内作業をなくしセキュリティリスクを軽減" }
+      - { body: "サーバー運用ドキュメントの整備、後続の運用担当の育成" }
+      - { body: "活用していないサーバーの整理と移行先の選定" }
+    tech: [Netlify, Cloudflare, "Cloudflare Pages", Vue, Nuxt]
+    variants: [long]
+
+  # ───────────────────────────────────────────
+  # インターンシップ群
+  # ───────────────────────────────────────────
+  - id: internship-div
+    type: internship
+    company: 株式会社Div
+    role_label: TECH::CAMP / TECH::EXPERT メンター
+    period: { start: "2018-04", end: "2019-05" }
+    description: |
+      教養としてプログラミングを学びたい人、エンジニア転職希望者へのプログラミング指導・メンタリング。
+      企業研修も担当し、オリジナルアプリ開発のサポートを実施。
+    tech: ["Ruby on Rails"]
+    variants: [long]
+
+  - id: internship-lancers
+    type: internship
+    company: ランサーズ株式会社
+    period: { start: "2018-06", end: "2018-08" }
+    description: |
+      PHPフレームワークのアップデートプロジェクトをインターンとして担当。
+      エラー箇所を修正していく作業に加え、UX観点での改善も一部実施。
+    tech: [PHP, Laravel]
+    variants: [long]
+
+  - id: internship-works
+    type: internship
+    company: ワークスアプリケーションズ
+    period: { start: "2017-02", end: "2017-03" }
+    description: 業務改善アプリの開発。
+    variants: [long]
+
+# ───────────────────────────────────────────
+# 強み・弱み（LAPRAS job_summary より要素抽出）
+# ───────────────────────────────────────────
+
+strengths:
+  # 2026 年版（2026-04-30 更新）— 旧 LAPRAS 由来 5 項目を全面入れ替え
+  # 4 つの AI エージェントによる辛口レビューと本人ヒアリングを統合した結果
+  - id: s-phase-coverage
+    label: 事業フェーズに応じた開発判断の切り替え
+    body: |
+      フェーズに応じて技術投資の粒度を切り替える。
+      安定期：仕様互換性と負債解消、新規事業：PoC速度と検証コスト、グロース局面：計測・運用設計、という重み付けを使い分けてきた。
+    variants: [long, short]
+
+  - id: s-e2e-execution
+    label: ヒアリングから本番リリース・改善戦略まで一人で通す E2E 実行力
+    body: |
+      事業仮説の検証から要件定義・設計・開発リード・リリース実作業・モニタリング・改善方針策定まで、一気通貫で担当。
+      組織を巻き込みつつ全工程に自分で踏み込んできた。
+      スコープが広いだけでなく、各レイヤーで適切な深さに踏み込める。
+    variants: [long, short]
+
+  - id: s-strategy-chain
+    label: 経営目標とユーザー体験をロジックチェーンで接続する戦略策定力
+    body: |
+      売上目標 → 体験定義 → 阻害要因分析 → 成果優先順位 → 大方針 → 施策 → 技術設計を1人で連結。
+      批判的自己評価としてプランB併記まで踏み込む戦略構築のスタイル。
+      経営層への段階的承認フローまで設計し、意思決定サポートまで完遂してきた。
+    variants: [long, short]
+
+  - id: s-novelty-injection
+    label: 新しい概念を組織の意思決定軸に持ち込む力
+    body: |
+      抽象的な技術トレンドを、組織が動ける具体まで落として浸透させる。
+      単なる「学習が早い」ではなく、組織の評価軸そのものを書き換えるレベル。
+      例：ハーネスエンジニアリング概念を約1ヶ月で研究レポート化。フロントエンド移行戦略の決定軸を「AI親和性」に書き換え、組織意思決定まで完遂。
+    variants: [long]
+
+  - id: s-decision-residue
+    label: 「やらない」判断を組織知に変える設計力
+    body: |
+      技術選定で採用するものより、却下するものの理由を残す。
+      後続の議論コスト低減を狙った組織文化として定着させてきた。
+      早すぎる抽象化を避け、現時点で必要のない共通化は明示的に保留する。
+      共通UIコンポーネント化、UseCase層追加、Next.js移行などの「やらない判断」をADRとして継続的に残してきた。
+    variants: [long, short]
+
+  - id: s-mentoring-design
+    label: ジュニアでも追える設計を、技術選定段階から組み込む育成設計力
+    body: |
+      技術選定そのものを学習機会として設計し、ジュニアでも追える形に翻訳する。
+      テスト・OOP・DDD未経験のジュニアを、Specificationパターン・型安全モックテスト・次期テックリードまで段階的に引き上げた。
+      マルチフロント技術選定を意図的に分離し、中間レベル → 本来到達レベルと段階的に上がる学習ステップとして組み込んだ。
+    variants: [long, short]
+
+  - id: s-zero-trust
+    label: ゼロトラスト前提でルール側に複雑性を寄せる設計判断力
+    body: |
+      フロント直アクセスを許可。代わりに、ドメインバリデーション・外部キー制約相当・スキーマ検証をルール側に集約する。
+      バックエンドを薄く保ちつつフロント側は信用しない設計とし、ルールが設計書として読める粒度まで作り込む。
+      特にRLS系のアーキテクチャで重要な判断軸として持っている。
+    variants: [long]
+
+  - id: s-solo-production
+    label: ソロ本番運用に耐える設計を一発で組める力
+    body: |
+      設計判断とインフラ・セキュリティ・運用設計を同時に組み立てる。
+      「動くもの」ではなく「運用できるもの」を最初から組み立てられる粒度感を持つ。
+      複数の0→1 PoC（共通基盤 / 医療文書OCR / 転院依頼自動化）を、GCP のインフラ・セキュリティまで含めて単独で本番投入してきた。
+      構成例: Cloud Run / Firebase / IAM・Secret Manager。
+    variants: [long]
+
+weaknesses:
+  # 2026 年版（2026-04-30 更新）— 否定的ニュアンスを排除し、能動的な表現に統一
+  - id: w-solo-bias
+    label: ソロでの設計・実装完遂が続いてきたため、他者を動かしての規模化の場面は相対的に少なめ
+    body: |
+      ソロでの設計・実装完遂が続いてきたため、他者を動かして規模化する場面は相対的に少なめ。
+      テックリードとしての推進経験はあるが、純粋なマネジメント職とは異なる立ち位置で進めてきた。
+      一人で進める機会が多かったため、複数チームを動かしての規模化は相対的に経験が薄い。
+      起業時に共同創業者を巻き込む立場としても重要な自覚ポイントとして取り組み中。
+    variants: [long]
+
+  - id: w-management-experience
+    label: 経営者としての意思決定実績はこれから
+    body: |
+      プロダクトレベルでの戦略策定・経営層への提案実績は積んできた。
+      一方で、資金・組織・撤退判断など経営者としての意思決定実績はこれから積む段階。
+      2026年5月に共同創業3名と介護・医療領域で起業予定。ここから本格的に積み上げる領域。
+    variants: [long]
+
+  - id: w-large-scale-org
+    label: 全社規模・複数事業横断の組織変革経験は現職規模では機会がなかった
+    body: |
+      小〜中規模チームやBiz / Dev / CSをまたぐ改善、採用・育成・開発文化づくりには実績がある。
+      数百人規模の組織変革やマルチプロダクト横断の意思決定経験は、現職フェーズで機会がなかった。
+      次のフェーズで取り組みたい領域。
+    variants: [long]
+
+  - id: w-narrative
+    label: 構造的な発信・ナラティブ力は伸ばし中
+    body: |
+      社内ドキュメント・PRD・議事録での構造的な言語化は得意。
+      一方で、社外に向けて自分の知見・仮説をストーリーとして届ける筋肉は意識的に取り組み始めたばかり。
+      2026年4月からポッドキャスト「カイラジ」のディレクションを開始。
+      対外発信の継続的な訓練の段階。
+    variants: [long]
+
+# ───────────────────────────────────────────
+# 設計思想 / Design Philosophy
+# PJ 横断で適用される設計原則。achievement の上位レイヤとして "なぜそう判断したか" を残す。
+# ───────────────────────────────────────────
+
+design_philosophy:
+  - id: dp-yarananai
+    label: 「やらない」判断を ADR に残す
+    body: |
+      共通 UI コンポーネント化、Next.js 移行、OpenAPI 化、UseCase 層の追加など、
+      誘惑の多い改善案を「現時点では採用しない」として理由付きで保留にする。
+      技術選定は採用するものの理由よりも、却下するものの理由を残す方が組織を育てる。
+      後続の議論コストを下げ、判断の経緯を組織知として継承する。
+    seen_in: [3sunny-techlead, 3sunny-chief]
+    variants: [long]
+
+  - id: dp-mentoring-tech-integration
+    label: 育成と技術選定を統合する
+    body: |
+      教育に十分なコストを掛けられない現場では、技術選定そのものを学習機会として設計する。
+      本来到達したいレベル（DDD / Clean Architecture）を最初から押し付けず、
+      中間レベルから段階的に上げる学習ステップを技術選定に組み込み、ジュニアでも追える設計に。
+      技術判断と育成判断を分離せず、同じ意思決定で両立させる。
+    seen_in: [3sunny-techlead]
+    variants: [long]
+
+  - id: dp-code-as-textbook
+    label: コードを教科書として書く（人にも AI にも）
+    body: |
+      Entity / IdValueObject / AbstractValueObject の 3 つの基底をそろえて
+      クラス・抽象・継承の概念を実例で見せる。
+      命名・ディレクトリ・テスト構造そのものが学習教材として機能する状態に作る。
+      副次的に、AI（Claude Code / Cursor / Codex 等）にとってもハーネスエンジニアリングが効きやすい
+      コードベースになり、人間と AI の双方にとって読みやすいリポジトリが実現する。
+    seen_in: [3sunny-techlead, 3sunny-chief]
+    variants: [long]
+
+  - id: dp-zero-trust
+    label: ゼロトラスト設計（ルールが設計書として読める粒度まで）
+    body: |
+      フロント直アクセス（Firestore SDK 直接利用、RDB の RLS 等）を許可する代わりに、
+      ルール側でドメインバリデーション・外部キー制約相当・スキーマ検証を完結させる。
+      バックエンドを薄く保ちつつ、フロントを信用しない設計。
+      RLS 系のアーキテクチャでは特に重要で、ルールが設計書として読める粒度まで作り込む必要がある。
+    seen_in: [3sunny-techlead]
+    variants: [long]
+
+  - id: dp-no-premature-abstraction
+    label: 早すぎる抽象化を避ける
+    body: |
+      現時点で必要のない共通化は明示的に保留する。
+      共有 UI コンポーネント、汎用 ORM、独自フレームワーク等は
+      「2 つ目以降の事例が出てから抽象化する」を原則に、
+      代わりに共有するのはドメイン層（用語と契約）だけに限定する。
+      過剰な抽象化が将来の変更コストを増やすことを避ける。
+    seen_in: [3sunny-techlead]
+    variants: [long]
