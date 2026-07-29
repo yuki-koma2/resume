@@ -1,7 +1,7 @@
 # リリースガイド
 
 このドキュメントは、本リポジトリ（`yuki-koma2/resume`）のリリースフローを **はじめて触る人でも一人で完結できるレベル** で解説するものです。  
-履歴書本文の更新だけなら `master` に push すれば GitHub Pages に反映されますが、**配布用の PDF を更新するにはリリース作業が必要** です。本ドキュメントはその「リリース作業」に焦点を当てています。
+履歴書本文の更新だけなら `main` に push すれば GitHub Pages に反映されますが、**配布用の PDF を更新するにはリリース作業が必要** です。本ドキュメントはその「リリース作業」に焦点を当てています。
 
 ---
 
@@ -9,15 +9,15 @@
 
 「CI/CD」は **CI（Continuous Integration: 継続的インテグレーション）** と **CD（Continuous Delivery: 継続的デリバリ）** の総称で、コードを変更するたびに *自動で* テスト・ビルド・配布までを走らせる仕組みのことです。
 
-- **CI（継続的インテグレーション）** … push や Pull Request のたびに、品質チェック（lint やテスト）を自動で走らせる。壊れた状態が `master` に混入することを防ぐ。
+- **CI（継続的インテグレーション）** … push や Pull Request のたびに、品質チェック（lint やテスト）を自動で走らせる。壊れた状態が `main` に混入することを防ぐ。
 - **CD（継続的デリバリ）** … 一定の条件を満たしたタイミング（タグ作成、手動実行など）で、ビルドした成果物を配布物として公開する。
 
 本リポジトリでは GitHub Actions を使い、以下 4 本のワークフローでこれを実現しています。
 
 | ファイル | トリガー | 役割 | 区分 |
 | -- | -- | -- | -- |
-| `.github/workflows/ci.yaml` | `push` to `master` / `pull_request` | `npm run lint`（textlint）を実行 | CI |
-| `.github/workflows/release.yaml` | `workflow_dispatch` / `push` to `master` | PDF をビルドし、Git タグ採番＆ GitHub Release を作成 | CD |
+| `.github/workflows/ci.yaml` | `push` to `main` / `pull_request` | `npm run lint`（textlint）を実行 | CI |
+| `.github/workflows/release.yaml` | `workflow_dispatch` | PDF をビルドし、Git タグ採番＆ GitHub Release を作成 | CD |
 | `.github/workflows/npmVersionUp.yaml` | `workflow_dispatch` | `package.json` の `"version"` を `npm version` で更新 | 補助 |
 | `.github/workflows/reminder.yaml` | `cron`（四半期） | 「履歴書を更新してね」という Issue を自動生成 | 通知 |
 
@@ -55,8 +55,8 @@
 
 リリースを走らせる前に以下を満たしていることを確認してください。
 
-- [ ] `docs/README.md`（履歴書本文）の更新が `master` にコミット／マージされている。
-- [ ] CI（`ci.yaml`）が `master` で **緑（成功）** になっている。
+- [ ] `docs/README.md`（履歴書本文）の更新が `main` にコミット／マージされている。
+- [ ] CI（`ci.yaml`）が `main` で **緑（成功）** になっている。
 - [ ] 必要に応じて、ローカルで `npm run build` を実行し `dist/resume.pdf` の見栄え（改ページ位置・フォント崩れ・PDF メタ情報）を目視確認している。
 
 ローカル確認は必須ではありませんが、CI でビルドが通っても PDF レイアウトの崩れまでは検知できないため、推奨します。
@@ -66,7 +66,7 @@
 1. リポジトリページで **Actions** タブを開く。
 2. 左サイドバーから **`release and build pdf`** ワークフローを選択する。
 3. 右側に表示される **Run workflow** プルダウンを開く。
-4. **Use workflow from:** は `Branch: master` のまま。
+4. **Use workflow from:** は `Branch: main` のまま。
 5. **release size** で `patch` / `minor` / `major` のいずれかを選ぶ（基準は [§2](#2-バージョン番号の意味) を参照）。
 6. **Run workflow** ボタンを押す。
 
@@ -76,13 +76,12 @@
 
 `release.yaml` のジョブ `build` が以下のステップを順に実行します（`.github/workflows/release.yaml` 抜粋）。
 
-1. **`actions/checkout@v3`** — リポジトリをチェックアウト。
-2. **`actions/setup-node@v3` (Node.js 19)** — Node.js のセットアップ。
-3. **`npm install`** — 依存をインストール。
+1. **`actions/checkout@v4`** — リポジトリと全タグをチェックアウト。
+2. **`actions/setup-node@v4` (Node.js 22)** — Node.js のセットアップ。
+3. **`npm ci`** — ロックファイルどおりに依存をインストール。
 4. **`npm run build`** — `md-to-pdf` が `docs/README.md` を読み込み、`config/md-to-pdf.config.json` の設定に従って `dist/resume.pdf` を生成。
-5. **`mathieudutour/github-tag-action@v6.1`** — 直前のタグを起点に、`releaseSize` で指定したパートを 1 つ上げて新しい Git タグを作成（例: `v2.0.4` → `patch` で `v2.0.5`）。
-6. **`actions/create-release@v1`** — そのタグに紐づく GitHub Release を作成。リリースノートには `mathieudutour/github-tag-action` が生成した changelog（直前のタグからのコミットログ）が入る。
-7. **`actions/upload-release-asset@v1`** — `dist/resume.pdf` を **`resume.pdf` という名前で** Release のアセットとして添付。
+5. **`mathieudutour/github-tag-action@v6.2`** — 直前のタグを起点に、`releaseSize` で指定したパートを 1 つ上げて新しい Git タグを作成（例: `v2.0.4` → `patch` で `v2.0.5`）。
+6. **`softprops/action-gh-release@v3.0.2`** — そのタグに紐づく GitHub Release を作成し、`dist/resume.pdf` をアセットとして添付。リリースノートには `mathieudutour/github-tag-action` が生成した changelog（直前のタグからのコミットログ）が入る。
 
 #### `mathieudutour/github-tag-action` の補足
 
@@ -119,7 +118,7 @@ PDF の入手は GitHub Releases から行うため、配布物の観点では `
 リリースを走らせる前に、手元で同じビルドを再現できます。
 
 ```shell
-$ npm install
+$ npm ci
 $ npm run lint     # textlint（CI と同じチェック）
 $ npm run test     # jest（現時点ではプレースホルダ）
 $ npm run build    # md-to-pdf → dist/resume.pdf を生成
@@ -140,10 +139,10 @@ $ npm run build    # md-to-pdf → dist/resume.pdf を生成
 | 症状 | 原因の典型例と対処 |
 | -- | -- |
 | `npm run lint` が CI で落ちる | `dictionary/prh_ubiquitous.yml`（ユビキタス言語）や `dictionary/typo.yml`（誤字）の校正ルールに当たっている可能性が高い。`npm run lint:fix` を試して差分を確認するか、エラーメッセージ中の `prh:` 行を見て該当語を直す。 |
-| `npm run build` が落ちる | `md-to-pdf` は内部で Chromium を起動する。Node 19 系を使っているか（`.node-version`）、`node_modules` が壊れていないか（`rm -rf node_modules && npm install`）を確認。 |
-| Release は作成されたが `resume.pdf` が添付されていない | `upload-release-asset` ステップのログで `asset_path: ./dist/resume.pdf` が見つからない／空、というエラーが出ていないか確認。直前の `npm run build` ステップが失敗・スキップしている場合がある。 |
+| `npm run build` が落ちる | `md-to-pdf` は内部で Chromium を起動する。Node 22 系を使っているか（`.node-version`）、`node_modules` が壊れていないか（依存を削除して `npm ci` し直す）を確認。 |
+| Release は作成されたが `resume.pdf` が添付されていない | `softprops/action-gh-release` ステップのログで `./dist/resume.pdf` が見つからない／空、というエラーが出ていないか確認。直前の `npm run build` ステップが失敗・スキップしている場合がある。 |
 | 想定と違うバージョンでタグが切られた | コミットに `feat:` / `fix:` / `BREAKING CHANGE:` などのプレフィックスが混じっていて、`mathieudutour/github-tag-action` の自動判定が `releaseSize` より優先された可能性。Releases から該当リリースを削除し、Git タグも削除した上で再実行する（タグ削除は破壊的なので慎重に）。 |
-| `release.yaml` が `master` への push のたびに勝手に走るのを止めたい | `release.yaml` の `on.push` セクションを削除すると `workflow_dispatch` のみでの起動になる。運用方針の変更にあたるため、変更前にメンテナと合意する。 |
+| `release.yaml` を自動実行したい | 現在は誤リリースを避けるため `workflow_dispatch` のみで起動する。自動化する場合は、タグ・Release の作成条件と重複実行時の扱いを決めてからトリガーを追加する。 |
 
 ---
 
