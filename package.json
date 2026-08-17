@@ -38,7 +38,7 @@
     "textlint-rule-preset-ja-spacing": "^2.3.0",
     "textlint-rule-preset-japanese": "^7.0.0",
     "ts-jest": "^29.4.12",
-    "ts-node": "^10.9.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "zod": "^4.4.3"
   },
